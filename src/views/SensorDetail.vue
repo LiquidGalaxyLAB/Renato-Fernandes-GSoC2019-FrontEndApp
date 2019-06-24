@@ -31,7 +31,7 @@ export default {
   props: {
     name: String
   },
-  mounted() {
+  beforeCreate() {
     this.axios
       .get(
         "http://localhost:8888/readSensor?name=" + this.$options.propsData.name
@@ -52,13 +52,19 @@ export default {
         this.data = data;
         this.labels = labels;
       })
-    this.axios
+      .catch(error => {
+        console.log(error.message);
+      })
+      .finally(()=>{
+        this.axios
       .get(
         "http://localhost:8888/getSensorInfo?name=" +
           this.$options.propsData.name
       )
       .then(result => {
         console.log("Resultado axio 2:");
+        console.log(result);
+
         var sensor = result.data.result;
         var date = new Date(sensor.register);
         var formatDate =
@@ -72,6 +78,8 @@ export default {
 
         console.log(this.sensor);
       });
+      });
+    
   },
   beforeUpdate() {},
   components: {

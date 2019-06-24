@@ -3,7 +3,7 @@
   "version": "0.1.0",
   "private": true,
   "scripts": {
-    "serve": "vue-cli-service serve",
+    "serve": "concurrently \"vue-cli-service serve\" \"nodemon /mnt/d/Codes/Repositories/Renato-Fernandes-GSoC2019/server/index.js\" \"autossh -R 80:localhost:8888 serveo.net \"",
     "build": "vue-cli-service build",
     "lint": "vue-cli-service lint"
   },
