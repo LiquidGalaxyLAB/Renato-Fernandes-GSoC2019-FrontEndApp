@@ -12,9 +12,35 @@
       </v-flex>
 
       <v-flex xs6>
-        <lineChart :data="data" :labels="labels" :unit="sensor.unit"/>
+        <lineChart id="chart" :chart-data="datacol"/>
+        <v-layout row wrap align-center justify-center>
+          <v-btn-toggle v-model="toggle_exclusive" justify-center>
+            <v-btn flat v-on:click="getReading('setup')">
+              <span>all</span>
+            </v-btn>
+            <v-btn flat v-on:click="getReading('1y')">
+              <span>1y</span>
+            </v-btn>
+            <v-btn flat v-on:click="getReading('6m')">
+              <span>6m</span>
+            </v-btn>
+            <v-btn flat v-on:click="getReading('1m')">
+              <span>1m</span>
+            </v-btn>
+            <v-btn flat v-on:click="getReading('1w')">
+              <span>1w</span>
+            </v-btn>
+            <v-btn flat v-on:click="getReading('1d')">
+              <span>1d</span>
+            </v-btn>
+          </v-btn-toggle>
+        </v-layout>
       </v-flex>
     </v-layout>
+    <br>
+    <br>
+    <br>
+
     <v-layout row wrap>
       <v-flex xs12>
         <GmapMap
@@ -23,7 +49,11 @@
           map-type-id="satellite"
           style="width: 100%; height: 300px"
         >
-          <GmapMarker ref="myMarker" :position="google && new google.maps.LatLng(sensor.location.y, sensor.location.x)" title="asd"/>
+          <GmapMarker
+            ref="myMarker"
+            :position="google && new google.maps.LatLng(sensor.location.y, sensor.location.x)"
+            title="asd"
+          />
         </GmapMap>
       </v-flex>
     </v-layout>
@@ -37,6 +67,7 @@ export default {
   data() {
     return {
       sensor: null,
+      datacol: {},
       data: null,
       labels: null
     };
@@ -44,56 +75,108 @@ export default {
   props: {
     name: String
   },
-  beforeCreate() {
-    this.axios
-      .get(
-        "http://localhost:8888/readSensor?name=" + this.$options.propsData.name
-      )
-      .then(result => {
-        console.log("Resultado axio 1:");
-
-        console.log(result);
-
-        var data = [];
-        var labels = [];
-        result.data.result.forEach(element => {
-          data.push(element.value);
-          labels.push(element.date);
-        });
-        console.log(data);
-
-        this.data = data;
-        this.labels = labels;
-      })
-      .catch(error => {
-        console.log(error.message);
-      })
-      .finally(() => {
-        this.axios
-          .get(
-            "http://localhost:8888/getSensorInfo?name=" +
-              this.$options.propsData.name
-          )
-          .then(result => {
-            console.log("Resultado axio 2:");
-            console.log(result);
-
-            var sensor = result.data.result;
-            var date = new Date(sensor.register);
-            var formatDate =
+  methods: {
+    test: function() {
+      var a = Object.assign({}, this.datacol);
+      a.datasets[0].data.push(400);
+      a.labels.push("renato");
+      this.datacol = a;
+    },
+    getReading: function(dateSpan) {
+      console.log(typeof dateSpan);
+      
+      var post = "http://localhost:8888/readSensor?name=" +this.$options.propsData.name
+      if(dateSpan!="setup"){
+      console.log("here!");
+        
+        post+="&datespan="+dateSpan
+      }
+      post = encodeURI(post)
+      console.log(post);
+      
+      this.axios
+        .get(post)
+        .then(result => {
+          var data = [];
+          var labels = [];
+          var j = 0;
+          if(dateSpan=="setup"){
+          for (var i = result.data.result.length; j < 10; i--, j++) {
+            var aux = result.data.result[i - 1];
+            data.push(aux.value);
+            var date = new Date(aux.date);
+            labels.push(
               date.getDate() +
-              "/" +
-              (date.getMonth() + 1) +
-              "/" +
-              date.getFullYear();
-            sensor.register = formatDate;
-            this.sensor = sensor;
-
-            console.log(this.sensor);
+                "/" +
+                (date.getMonth() + 1) +
+                "/" +
+                date.getFullYear()
+            );
+          }}
+          else{
+          result.data.result.forEach(element => {
+            data.push(element.value);
+            var date = new Date(element.date);
+            labels.push(
+              date.getDate() +
+                "/" +
+                (date.getMonth() + 1) +
+                "/" +
+                date.getFullYear()
+            );
           });
-      });
+          }
+          this.data = data;
+          this.labels = labels;
+        })
+        .finally(() => {
+          this.axios
+            .get(
+              "http://localhost:8888/getSensorInfo?name=" +
+                this.$options.propsData.name
+            )
+            .then(result => {
+              var sensor = result.data.result;
+              var date = new Date(sensor.register);
+              var formatDate =
+                date.getDate() +
+                "/" +
+                (date.getMonth() + 1) +
+                "/" +
+                date.getFullYear();
+              sensor.register = formatDate;
+              this.sensor = sensor;
+              var o = Math.round,
+                r = Math.random,
+                s = 255;
+              var color =
+                "rgba(" +
+                o(r() * s) +
+                "," +
+                o(r() * s) +
+                "," +
+                o(r() * s) +
+                "," +
+                r().toFixed(1) +
+                ")";
+
+              this.datacol = {
+                labels: this.labels,
+                datasets: [
+                  {
+                    label: this.sensor.unit,
+                    backgroundColor: color,
+                    data: this.data
+                  }
+                ]
+              };
+            });
+        });
+    }
   },
-  beforeUpdate() {},
+  mounted() {
+    this.getReading('setup')
+  },
   components: {
     lineChart
   },

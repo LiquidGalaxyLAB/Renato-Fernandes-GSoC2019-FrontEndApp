@@ -9,7 +9,7 @@
           <v-text-field v-model="user" :counter="8" label="Username" box :rules="nameRules"></v-text-field>
           <v-text-field v-model="mail" label="Email" box :rules="emailRules"></v-text-field>
           <v-text-field
-          v-model="pass"
+            v-model="pass"
             :append-icon="show1 ? 'visibility' : 'visibility_off'"
             :type="show1 ? 'text' : 'password'"
             label="Password"
@@ -36,9 +36,9 @@
 export default {
   data: () => ({
     match: "",
-    pass:"",
-    user:"",
-    mail:"",
+    pass: "",
+    user: "",
+    mail: "",
     valid: true,
     show1: false
   }),
@@ -48,22 +48,22 @@ export default {
         this.snackbar = true;
       }
     },
-    register(){
-      if(this.$refs.form.validate()){
-              this.axios
-              .post("http://localhost:8888/auth/register",
-              {name:this.user,
-              email:this.mail,
-              password:this.pass}).then(result=>{
-                if(result.status==200){
-                  this.$router.push({name:'home'})
-                }
-              })
+    register() {
+      if (this.$refs.form.validate()) {
+        this.axios
+          .post("http://localhost:8888/auth/register", {
+            name: this.user,
+            email: this.mail,
+            password: this.pass
+          })
+          .then(result => {
+            if (result.status == 200) {
+              this.$router.push({ name: "home" });
+            }
+          });
+      } else {
+        window.alert("not ok");
       }
-      else{
-        window.alert('not ok')
-      }
-
     }
   },
   computed: {

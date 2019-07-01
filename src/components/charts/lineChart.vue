@@ -1,28 +1,11 @@
 <script>
-import { Line } from "vue-chartjs";
-
+import { Line, mixins } from "vue-chartjs";
+const { reactiveProp } = mixins;
 export default {
   extends: Line,
-  props: {
-    data: Array,
-    labels: Array,
-    unit:String 
-  },
-  mounted(){
-    var o = Math.round,
-      r = Math.random,
-      s = 255;
-    var color =
-      "rgba(" +
-      o(r() * s) +
-      "," +
-      o(r() * s) +
-      "," +
-      o(r() * s) +
-      "," +
-      r().toFixed(1) +
-      ")";
-
+  mixins: [reactiveProp],
+  props: ["options"],
+  mounted() {
     var op = {
       responsive: true,
       title: {
@@ -58,19 +41,7 @@ export default {
         ]
       }
     };
-    this.renderChart(
-      {
-        labels: this.$options.propsData.labels,
-        datasets: [
-          {
-            label: this.$options.propsData.unit,
-            backgroundColor: color,
-            data: this.$options.propsData.data
-          }
-        ]
-      },
-      op
-    );
+    this.renderChart(this.chartData, op);
   }
 };
 </script>

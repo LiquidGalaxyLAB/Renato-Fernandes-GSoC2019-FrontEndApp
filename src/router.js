@@ -30,9 +30,9 @@ export default new Router({
       component: () => import('./views/SensorList.vue')
     },
     {
-      path:'/signup',
-      name:'SignUp',
-      component:()=>import('./views/auth/SignUp.vue')
+      path: '/signup',
+      name: 'SignUp',
+      component: () => import('./views/auth/SignUp.vue')
     }
   ]
 })

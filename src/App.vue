@@ -21,7 +21,7 @@
 
     <v-footer class="pa-3">
       Google Summer Of Code
-      - Renato Fernandes - 
+      - Renato Fernandes -
       <v-spacer></v-spacer>
       <div>&copy; {{ new Date().getFullYear() }}</div>
     </v-footer>

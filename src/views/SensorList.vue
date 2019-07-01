@@ -27,9 +27,6 @@ export default {
     this.axios
       .get("http://localhost:8888/getAllSensors")
       .then(response => {
-        console.log("Axios here!");
-        console.log(response);
-        
         this.sensorList = response.data.result;
       })
       .catch(err => {

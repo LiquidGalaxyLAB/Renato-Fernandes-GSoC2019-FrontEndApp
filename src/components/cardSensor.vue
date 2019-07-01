@@ -38,7 +38,6 @@ export default {
   beforeCreate() {
     var id = this.$options.propsData.imgId;
     var path;
-    console.log(id);
 
     if (id == 1) {
       path = require("../assets/tempSensor.jpg");

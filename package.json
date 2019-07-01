@@ -3,9 +3,10 @@
   "version": "0.1.0",
   "private": true,
   "scripts": {
-    "serve": "concurrently \"vue-cli-service serve\" \"nodemon /mnt/d/Codes/Repositories/Renato-Fernandes-GSoC2019/server/index.js\" \"autossh -R 80:localhost:8888 serveo.net \"",
+    "serve": "concurrently \"vue-cli-service serve\" \"nodemon /mnt/d/Codes/Repositories/Renato-Fernandes-GSoC2019/server/index.js\" \"autossh -R s2os10fhgh:80:localhost:8888 serveo.net \"",
     "build": "vue-cli-service build",
-    "lint": "vue-cli-service lint"
+    "lint": "vue-cli-service lint",
+    "site": "vue-cli-service serve"
   },
   "dependencies": {
     "chart.js": "^2.8.0",
@@ -18,6 +19,7 @@
     "vuex": "^3.0.1"
   },
   "devDependencies": {
+    "@fortawesome/fontawesome-free": "^5.9.0",
     "@vue/cli-plugin-babel": "^3.8.0",
     "@vue/cli-plugin-eslint": "^3.8.0",
     "@vue/cli-service": "^3.8.0",
@@ -25,6 +27,7 @@
     "babel-eslint": "^10.0.1",
     "eslint": "^5.16.0",
     "eslint-plugin-vue": "^5.0.0",
+    "material-design-icons-iconfont": "^5.0.1",
     "stylus": "^0.54.5",
     "stylus-loader": "^3.0.1",
     "vue-cli-plugin-axios": "0.0.4",
