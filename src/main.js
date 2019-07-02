@@ -8,7 +8,8 @@ import store from './store'
 import * as VueGoogleMaps from 'vue2-google-maps'
 import Vuetify from 'vuetify'
 Vue.config.productionTip = false
-
+import VueCookies from 'vue-cookies'
+Vue.use(VueCookies)
 Vue.use(VueGoogleMaps, {
   load: {
     key: 'AIzaSyCX0EVea8pRdiSdso5s78fahE7VTm0YtaA',
