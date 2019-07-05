@@ -43,18 +43,7 @@
 
     <v-layout row wrap>
       <v-flex xs12>
-        <GmapMap
-          :center="{lat:sensor.location.y, lng:sensor.location.x}"
-          :zoom="17"
-          map-type-id="satellite"
-          style="width: 100%; height: 300px"
-        >
-          <GmapMarker
-            ref="myMarker"
-            :position="google && new google.maps.LatLng(sensor.location.y, sensor.location.x)"
-            title="asd"
-          />
-        </GmapMap>
+        <gmap :lat="sensor.location.x" :lng="sensor.location.y" :editable="false" />
       </v-flex>
     </v-layout>
   </v-container>
@@ -62,7 +51,7 @@
 
 <script>
 import lineChart from "../components/charts/lineChart";
-import { gmapApi } from "vue2-google-maps";
+import gmap from '../components/maps'
 export default {
   data() {
     return {
@@ -76,12 +65,6 @@ export default {
     name: String
   },
   methods: {
-    test: function() {
-      var a = Object.assign({}, this.datacol);
-      a.datasets[0].data.push(400);
-      a.labels.push("renato");
-      this.datacol = a;
-    },
     getReading: function(dateSpan) {
       console.log(typeof dateSpan);
       
@@ -146,6 +129,8 @@ export default {
                 date.getFullYear();
               sensor.register = formatDate;
               this.sensor = sensor;
+              console.log(sensor.location.x);
+              
               var o = Math.round,
                 r = Math.random,
                 s = 255;
@@ -178,10 +163,8 @@ export default {
     this.getReading('setup')
   },
   components: {
-    lineChart
-  },
-  computed: {
-    google: gmapApi
+    lineChart,
+    gmap
   }
 };
 </script>

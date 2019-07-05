@@ -44,7 +44,7 @@ export default {
         .post("http://localhost:8888/auth/login", {
           name: this.user,
           password: this.pass
-        }, { withCredentials: true })
+        },{ withCredentials: true })
         .then((result) => {
           console.log(result);
 

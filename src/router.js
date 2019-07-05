@@ -41,6 +41,19 @@ export default new Router({
       path: '/dashboard',
       name : 'dashboard',
       component: ()=>import('./views/auth/DashBoard.vue')
+    },{
+      path: '/sensorregister',
+      name : 'sensorregister',
+      component: ()=>import('./views/SensorRegister.vue')
+    },{
+      path: '/usersensors',
+      name : 'usersensors',
+      component: ()=>import('./views/UserSensors.vue')
+    },{
+      path: '/:nameOld/editsensor',
+      name : 'editsensor',
+      component: ()=>import('./views/SensorEdit.vue'),
+      props: true
     }
   ]
 })

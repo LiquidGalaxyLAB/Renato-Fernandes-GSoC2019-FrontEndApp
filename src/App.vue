@@ -51,11 +51,14 @@ export default {
     }
   },
   created() {
-    console.log($cookies.isKey("valid"));
+    //console.log($cookies.isKey("valid"));
     if ($cookies.isKey("valid")) {
+      
       this.axios
+      
         .get("http://localhost:8888/auth/check", { withCredentials: true })
         .then(result => {
+          //console.log(result);
           this.$store.dispatch("setUser", result.data);
         });
     }

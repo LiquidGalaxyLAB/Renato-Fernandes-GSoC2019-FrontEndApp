@@ -3,7 +3,7 @@
   "version": "0.1.0",
   "private": true,
   "scripts": {
-    "serve": "concurrently \"vue-cli-service serve\" \"nodemon /mnt/d/Codes/Repositories/Renato-Fernandes-GSoC2019/server/index.js\" \"autossh -R s2os10fhgh:80:localhost:8888 serveo.net \"",
+    "serve": "concurrently \"vue-cli-service serve\" \"nodemon --ignore sessions/ /mnt/d/Codes/Repositories/Renato-Fernandes-GSoC2019/server/index.js\" \"autossh -R s2os10fhgh:80:localhost:8888 serveo.net \"",
     "build": "vue-cli-service build",
     "lint": "vue-cli-service lint",
     "site": "vue-cli-service serve"
@@ -11,10 +11,12 @@
   "dependencies": {
     "chart.js": "^2.8.0",
     "core-js": "^2.6.5",
+    "google-maps": "^3.3.0",
     "vue": "^2.6.10",
     "vue-chartjs": "^3.4.2",
     "vue-cookies": "^1.5.13",
     "vue-router": "^3.0.3",
+    "vue-select-image": "^1.7.0",
     "vue2-google-maps": "^0.10.6",
     "vuetify": "^1.5.5",
     "vuex": "^3.0.1",

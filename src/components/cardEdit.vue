@@ -20,6 +20,8 @@
     </v-card-title>
     <v-card-actions>
       <v-btn flat color="orange" :href="'/'+title+'/sensorDetail'">See Details</v-btn>
+      <v-btn flat color="success" :href="'/'+title+'/editsensor'">Edit</v-btn>
+      <v-btn flat color="error">Delete</v-btn>
     </v-card-actions>
   </v-card>
 </template>
@@ -38,12 +40,6 @@ export default {
   beforeCreate() {
     var id = this.$options.propsData.imgId;
     var path=require("../assets/sensorimg/"+ id+".jpg");
-
-    // if (id == 1) {
-    //   path = require("../assets/tempSensor.jpg");
-    // } else if (id == 2) {
-    //   path = require("../assets/windSensor.jpg");
-    // }
     this.$options.propsData.imgpath = path;
   }
 };

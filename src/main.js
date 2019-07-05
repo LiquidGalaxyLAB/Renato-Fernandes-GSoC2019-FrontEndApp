@@ -9,11 +9,16 @@ import * as VueGoogleMaps from 'vue2-google-maps'
 import Vuetify from 'vuetify'
 Vue.config.productionTip = false
 import VueCookies from 'vue-cookies'
+import VueSelectImage from 'vue-select-image'
+require('vue-select-image/dist/vue-select-image.css')
+
+
+Vue.use(VueSelectImage)
 Vue.use(VueCookies)
 Vue.use(VueGoogleMaps, {
   load: {
     key: 'AIzaSyCX0EVea8pRdiSdso5s78fahE7VTm0YtaA',
-    libraries: 'places', // This is required if you use the Autocomplete plugin
+    libraries: 'places,drawing,visualization', // This is required if you use the Autocomplete plugin
     // OR: libraries: 'places,drawing'
     // OR: libraries: 'places,drawing,visualization'
     // (as you require)
