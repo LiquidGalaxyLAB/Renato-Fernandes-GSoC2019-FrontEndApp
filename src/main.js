@@ -42,6 +42,7 @@ Vue.use(VueGoogleMaps, {
 Vue.use(Vuetify, {
   iconfont: 'fa' // 'md' || 'mdi' || 'fa' || 'fa4'
 })
+
 new Vue({
   router,
   store,

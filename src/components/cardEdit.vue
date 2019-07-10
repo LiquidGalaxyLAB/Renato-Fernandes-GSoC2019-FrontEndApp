@@ -12,9 +12,9 @@
     <v-card-title>
       <div>
         <span :class="stateText">{{state}}</span>
-        <br>
+        <br />
         <span class="grey--text">{{desc}}</span>
-        <br>
+        <br />
         <span class="grey--text">{{lastData}}</span>
       </div>
     </v-card-title>
@@ -39,14 +39,20 @@ export default {
   },
   beforeCreate() {
     var id = this.$options.propsData.imgId;
-    var path=require("../assets/sensorimg/"+ id+".jpg");
+    var path = require("../assets/sensorimg/" + id + ".jpg");
     this.$options.propsData.imgpath = path;
   },
   methods: {
-    deleteSensor(){
-      this.axios.delete('http://localhost:8888/data/deletesensor',{data:{name:this.title},withCredentials: true})
-      this.$router.go() 
+    deleteSensor() {
+      this.axios
+        .delete("http://localhost:8888/data/deletesensor", {
+          data: { name: this.title },
+          
+        },{withCredentials: true})
+        .then(() => {
+          this.$router.go();
+        });
     }
-  },
+  }
 };
 </script>
