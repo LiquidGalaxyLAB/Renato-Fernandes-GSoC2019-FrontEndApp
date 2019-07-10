@@ -54,7 +54,7 @@ export default {
     if ($cookies.isKey("valid")) {
       
       this.axios
-        .get("http://localhost:8888/auth/check", { withCredentials: true })
+        .get(process.env.VUE_APP_backEnd+"/auth/check", { withCredentials: true })
         .then(result => {
           this.$store.dispatch("setUser", result.data);
         }).catch(err=>{

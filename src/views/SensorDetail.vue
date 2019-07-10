@@ -82,7 +82,7 @@ export default {
       console.log(typeof dateSpan);
 
       var post =
-        "http://localhost:8888/readSensor?name=" + this.$options.propsData.name;
+        process.env.VUE_APP_backEnd+"/readSensor?name=" + this.$options.propsData.name;
       if (dateSpan != "setup") {
         console.log("here!");
 
@@ -157,7 +157,7 @@ export default {
         .finally(() => {
           this.axios
             .get(
-              "http://localhost:8888/getSensorInfo?name=" +
+              process.env.VUE_APP_backEnd+"/getSensorInfo?name=" +
                 this.$options.propsData.name
             )
             .then(result => {

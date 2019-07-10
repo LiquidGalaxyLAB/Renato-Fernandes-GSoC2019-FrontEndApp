@@ -62,7 +62,7 @@ export default {
       console.log(data);
 
       this.axios
-        .post("http://localhost:8888/data/editsensor", data, {
+        .post(process.env.VUE_APP_backEnd+"/data/editsensor", data, {
           withCredentials: true
         })
         .then(result => {
@@ -78,12 +78,12 @@ export default {
   created() {
     var vm = this;
     this.axios
-      .get("http://localhost:8888/auth/check", { withCredentials: true })
+      .get(process.env.VUE_APP_backEnd+"/auth/check", { withCredentials: true })
       .then(result => {
         console.log(this.$options.propsData.nameOld);
         this.axios
           .get(
-            "http://localhost:8888/getSensorInfo?name=" +
+            process.env.VUE_APP_backEnd+"/getSensorInfo?name=" +
               vm.$options.propsData.nameOld
           )
           .then(result => {

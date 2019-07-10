@@ -63,7 +63,7 @@ export default {
     register() {
       if (this.$refs.form.validate()) {
         this.axios
-          .post("http://localhost:8888/auth/register", {
+          .post(process.env.VUE_APP_backEnd+"/auth/register", {
             name: this.user,
             email: this.mail,
             password: this.pass
@@ -82,7 +82,7 @@ export default {
       if (v != "") {
         return new Promise((resolve, reject) => {
           this.axios
-            .get("http://localhost:8888/checkUser?username=" + v)
+            .get(process.env.VUE_APP_backEnd+"/checkUser?username=" + v)
             .then(result => {
               if (result.data.messages[0]) {
                 this.nameTaken=true

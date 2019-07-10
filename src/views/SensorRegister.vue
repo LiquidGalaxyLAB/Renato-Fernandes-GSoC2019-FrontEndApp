@@ -51,7 +51,7 @@ export default {
         unit: vue.unit,
         img: store.selectedimg
       };
-      this.axios.post("http://localhost:8888/data/registersensor",data,{withCredentials: true})
+      this.axios.post(process.env.VUE_APP_backEnd+"/data/registersensor",data,{withCredentials: true})
       .then(result=>{
         console.log("Sucess!");
         
@@ -64,7 +64,7 @@ export default {
   },
   mounted() {
     this.axios
-      .get("http://localhost:8888/auth/check", { withCredentials: true })
+      .get(process.env.VUE_APP_backEnd+"/auth/check", { withCredentials: true })
       .then(result => {
         console.log("ok");
       })

@@ -27,7 +27,7 @@ export default {
   },
   created() {
         this.axios
-      .get("http://localhost:8888/auth/check", { withCredentials: true })
+      .get(process.env.VUE_APP_backEnd+"/auth/check", { withCredentials: true })
       .catch(err => {
         console.log("Erro");
         console.log(err);
@@ -43,7 +43,7 @@ export default {
   methods: {
     logout: function() {
       this.axios
-        .get("http://localhost:8888/auth/logout", { withCredentials: true })
+        .get(process.env.VUE_APP_backEnd+"/auth/logout", { withCredentials: true })
         .then(result => {
           console.log(result);
           this.$router.push({name:"signin"})

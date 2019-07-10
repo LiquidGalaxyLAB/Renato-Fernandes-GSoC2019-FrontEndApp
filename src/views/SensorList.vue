@@ -24,8 +24,10 @@ export default {
     };
   },
   mounted() {
+    console.log(process.env.VUE_APP_backEnd);
+    
     this.axios
-      .get("http://localhost:8888/getAllSensors")
+      .get(process.env.VUE_APP_backEnd+"/getAllSensors")
       .then(response => {
         this.sensorList = response.data.result;
       })

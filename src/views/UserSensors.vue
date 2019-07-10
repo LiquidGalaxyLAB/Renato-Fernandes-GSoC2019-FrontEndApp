@@ -25,7 +25,7 @@ export default {
   },
   mounted() {
     this.axios
-      .get("http://localhost:8888/getusersensors", { withCredentials: true })
+      .get(process.env.VUE_APP_backEnd+"/getusersensors", { withCredentials: true })
       .then(response => {
         this.sensorList = response.data.result;
       })

@@ -38,7 +38,7 @@ export default {
     login() {
       this.axios
         .post(
-          "http://localhost:8888/auth/login",
+          process.env.VUE_APP_backEnd+"/auth/login",
           {
             name: this.user,
             password: this.pass
