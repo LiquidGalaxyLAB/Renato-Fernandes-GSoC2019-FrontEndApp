@@ -51,18 +51,18 @@ export default {
     }
   },
   created() {
-    if ($cookies.isKey("valid")) {
-      
-      this.axios
-        .get(process.env.VUE_APP_backEnd+"/auth/check", { withCredentials: true })
-        .then(result => {
-          this.$store.dispatch("setUser", result.data);
-        }).catch(err=>{
-          console.log(err);
-          
-        })
-    }
-    this.valid = !$cookies.isKey("valid");
+    this.axios
+      .get(process.env.VUE_APP_backEnd + "/auth/check", {
+        withCredentials: true
+      })
+      .then(result => {
+        this.$store.dispatch("setUser", result.data);
+        this.valid = false;
+      })
+      .catch(err => {
+        console.log(err);
+        this.valid = true;
+      });
   }
 };
 </script>

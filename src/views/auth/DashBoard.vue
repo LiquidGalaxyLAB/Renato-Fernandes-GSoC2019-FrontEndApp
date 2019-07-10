@@ -46,8 +46,8 @@ export default {
         .get(process.env.VUE_APP_backEnd+"/auth/logout", { withCredentials: true })
         .then(result => {
           console.log(result);
-          this.$router.push({name:"signin"})
-          //window.location.href = "/signin";
+          //this.$router.push({name:"signin"})
+          window.location.href = "/signin";
         })
         .catch(() => {
           console.log("Porra");
