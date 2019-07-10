@@ -13,7 +13,7 @@
           v-model="desc"
         ></v-textarea>
         <v-overflow-btn v-model="unit" :items="units" label="Unit" target="#dropdown-example"></v-overflow-btn>
-        <v-btn flat color="success" @click="edit">Register</v-btn>
+        <v-btn flat color="success" @click="edit">Edit</v-btn>
       </v-flex>
       <v-flex offset-xs1 xs6>
         <GridList />
@@ -68,7 +68,7 @@ export default {
         .then(result => {
           console.log("Sucess!");
 
-          // window.location.href='/sensorlist'
+          window.location.href='/sensorlist'
         })
         .catch(err => {
           console.log(err);

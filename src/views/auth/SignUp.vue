@@ -69,9 +69,7 @@ export default {
             password: this.pass
           })
           .then(result => {
-            if (result.status == 200) {
-              this.$router.push({ name: "home" });
-            }
+            window.location.href='/dashboard'
           });
       } else {
         window.alert("not ok");
