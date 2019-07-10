@@ -21,7 +21,7 @@
     <v-card-actions>
       <v-btn flat color="orange" :href="'/'+title+'/sensorDetail'">See Details</v-btn>
       <v-btn flat color="success" :href="'/'+title+'/editsensor'">Edit</v-btn>
-      <v-btn flat color="error">Delete</v-btn>
+      <v-btn flat color="error" @click="deleteSensor">Delete</v-btn>
     </v-card-actions>
   </v-card>
 </template>
@@ -41,6 +41,12 @@ export default {
     var id = this.$options.propsData.imgId;
     var path=require("../assets/sensorimg/"+ id+".jpg");
     this.$options.propsData.imgpath = path;
-  }
+  },
+  methods: {
+    deleteSensor(){
+      this.axios.delete('http://localhost:8888/data/deletesensor',{data:{name:this.title},withCredentials: true})
+      this.$router.go() 
+    }
+  },
 };
 </script>

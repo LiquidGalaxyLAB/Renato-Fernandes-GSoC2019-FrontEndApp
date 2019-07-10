@@ -39,11 +39,6 @@ export default {
     var id = this.$options.propsData.imgId;
     var path=require("../assets/sensorimg/"+ id+".jpg");
 
-    // if (id == 1) {
-    //   path = require("../assets/tempSensor.jpg");
-    // } else if (id == 2) {
-    //   path = require("../assets/windSensor.jpg");
-    // }
     this.$options.propsData.imgpath = path;
   }
 };

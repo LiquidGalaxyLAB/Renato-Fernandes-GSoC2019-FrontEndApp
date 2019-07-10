@@ -28,6 +28,9 @@
 <script>
 import GridList from "../components/ImageGrid";
 import gmap from "../components/maps";
+import GoogleMapsLoader from "google-maps";
+GoogleMapsLoader.KEY = "AIzaSyCX0EVea8pRdiSdso5s78fahE7VTm0YtaA";
+GoogleMapsLoader.LIBRARIES = ["places"];
 export default {
   data() {
     return {
@@ -36,9 +39,10 @@ export default {
       name: null,
       unit: null,
       desc: null,
-      lataux:null,
-      lngaux:null,
-      isFetching:false
+      lataux: null,
+      lngaux: null,
+      oldname: null,
+      isFetching: false
     };
   },
   methods: {
@@ -46,6 +50,7 @@ export default {
       var store = this.$store.state;
       var vue = this;
       var data = {
+        oldname: this.oldname,
         name: store.user,
         lat: store.latlng.lat(),
         lng: store.latlng.lng(),
@@ -54,47 +59,64 @@ export default {
         unit: vue.unit,
         img: store.selectedimg
       };
-      this.axios.post("http://localhost:8888/data/registersensor",data,{withCredentials: true})
-      .then(result=>{
-        console.log("Sucess!");
-        
-        window.location.href='/sensorlist'
-      }).catch(err=>{
-        console.log(err);
-        
-      })
+      console.log(data);
+
+      this.axios
+        .post("http://localhost:8888/data/editsensor", data, {
+          withCredentials: true
+        })
+        .then(result => {
+          console.log("Sucess!");
+
+          // window.location.href='/sensorlist'
+        })
+        .catch(err => {
+          console.log(err);
+        });
     }
   },
   created() {
-    var vm = this
+    var vm = this;
     this.axios
       .get("http://localhost:8888/auth/check", { withCredentials: true })
       .then(result => {
         console.log(this.$options.propsData.nameOld);
-            this.axios.get('http://localhost:8888/getSensorInfo?name='+vm.$options.propsData.nameOld)
-            .then(result=>{
-                var data = result.data.result
-                this.unit=data.unit
-                this.name=data.name
-                this.desc=data.description
-                this.img=data.imgId
-                this.lataux=data.location.x
-                this.lngaux=data.location.y
-                console.log(result);
-                console.log(typeof this.lataux);
-                this.isFetching=true
-                
-                
-            }).catch(err=>{
-                console.log(err);
-                
-            })
+        this.axios
+          .get(
+            "http://localhost:8888/getSensorInfo?name=" +
+              vm.$options.propsData.nameOld
+          )
+          .then(result => {
+            var data = result.data.result;
+            let vm = this;
+            this.unit = data.unit;
+            this.name = data.name;
+            this.oldname = data.name;
+            this.desc = data.description;
+            this.img = data.imgId;
+            this.lataux = data.location.x;
+            this.lngaux = data.location.y;
+            GoogleMapsLoader.load(function(google) {
+              vm.$store.state.latlng = new google.maps.LatLng(
+                data.location.x,
+                data.location.y
+              );
+            });
+            console.log(result);
+            setInterval(() => {
+              console.log(this.$store.state.latlng);
+            }, 1000);
+
+            this.isFetching = true;
+          })
+          .catch(err => {
+            console.log(err);
+          });
       })
       .catch(err => {
-          console.log('Erro');
-          
-          console.log(err);
-          
+        console.log("Erro");
+
+        console.log(err);
         window.location.href = "/signin";
       });
   },
@@ -102,8 +124,8 @@ export default {
     GridList,
     gmap
   },
-  props:{
-      nameOld:String
+  props: {
+    nameOld: String
   }
 };
 </script>

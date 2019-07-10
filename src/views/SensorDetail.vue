@@ -4,15 +4,24 @@
       <v-flex xs6>
         <h1 class="font-weight-light">
           Sensor Name: {{sensor.name}}
-          <br>
+          <br />
         </h1>
         <h3>Registered on: {{sensor.register}}</h3>
         <h3>Description: {{sensor.description}}</h3>
         <v-divider></v-divider>
+        <br><br><br>
+        <v-flex xs12 v-if="hasRead">
+          <h3>Min reading:{{min}}</h3>
+          <h3>Max reading:{{max}}</h3>
+          <h3>Average: {{avg}}</h3>
+        </v-flex>
+        <v-flex xs12 v-else>
+          <h3>The sensor has no reading for the time</h3>
+        </v-flex>
       </v-flex>
 
       <v-flex xs6>
-        <lineChart id="chart" :chart-data="datacol"/>
+        <lineChart id="chart" :chart-data="datacol" />
         <v-layout row wrap align-center justify-center>
           <v-btn-toggle v-model="toggle_exclusive" justify-center>
             <v-btn flat v-on:click="getReading('setup')">
@@ -37,9 +46,9 @@
         </v-layout>
       </v-flex>
     </v-layout>
-    <br>
-    <br>
-    <br>
+    <br />
+    <br />
+    <br />
 
     <v-layout row wrap>
       <v-flex xs12>
@@ -51,14 +60,18 @@
 
 <script>
 import lineChart from "../components/charts/lineChart";
-import gmap from '../components/maps'
+import gmap from "../components/maps";
 export default {
   data() {
     return {
       sensor: null,
       datacol: {},
       data: null,
-      labels: null
+      labels: null,
+      max: null,
+      min: null,
+      avg: null,
+      hasRead: false
     };
   },
   props: {
@@ -67,50 +80,79 @@ export default {
   methods: {
     getReading: function(dateSpan) {
       console.log(typeof dateSpan);
-      
-      var post = "http://localhost:8888/readSensor?name=" +this.$options.propsData.name
-      if(dateSpan!="setup"){
-      console.log("here!");
-        
-        post+="&datespan="+dateSpan
+
+      var post =
+        "http://localhost:8888/readSensor?name=" + this.$options.propsData.name;
+      if (dateSpan != "setup") {
+        console.log("here!");
+
+        post += "&datespan=" + dateSpan;
       }
-      post = encodeURI(post)
+      post = encodeURI(post);
       console.log(post);
-      
+
       this.axios
         .get(post)
         .then(result => {
+          console.log(result);
           var data = [];
           var labels = [];
+          let readings = result.data.result;
           var j = 0;
-          if(dateSpan=="setup"){
-          for (var i = result.data.result.length; j < 10; i--, j++) {
-            var aux = result.data.result[i - 1];
-            data.push(aux.value);
-            var date = new Date(aux.date);
-            labels.push(
-              date.getDate() +
-                "/" +
-                (date.getMonth() + 1) +
-                "/" +
-                date.getFullYear()
-            );
-          }}
-          else{
-          result.data.result.forEach(element => {
-            data.push(element.value);
-            var date = new Date(element.date);
-            labels.push(
-              date.getDate() +
-                "/" +
-                (date.getMonth() + 1) +
-                "/" +
-                date.getFullYear()
-            );
-          });
+          console.log(readings.length);
+
+          if (readings.length == 0) {
+            console.log("nope");
+            this.hasRead = false;
+          } else {
+            this.hasRead = true;
+          }
+          if (dateSpan == "setup") {
+            for (var i = readings.length; j < 10; i--, j++) {
+              var aux = readings[i - 1];
+              data.push(aux.value);
+              var date = new Date(aux.date);
+              labels.push(
+                date.getDate() +
+                  "/" +
+                  (date.getMonth() + 1) +
+                  "/" +
+                  date.getFullYear()
+              );
+            }
+          } else {
+            readings.forEach(element => {
+              data.push(element.value);
+              var date = new Date(element.date);
+              labels.push(
+                date.getDate() +
+                  "/" +
+                  (date.getMonth() + 1) +
+                  "/" +
+                  date.getFullYear()
+              );
+            });
           }
           this.data = data;
           this.labels = labels;
+          console.log(Math.min(...data));
+          console.log(labels[data.indexOf(Math.min(...data))]);
+          this.min =
+            Math.min(...data) +
+            " on " +
+            labels[data.indexOf(Math.min(...data))];
+          this.max =
+            Math.max(...data) +
+            " on " +
+            labels[data.indexOf(Math.max(...data))];
+
+          var sum = data.reduce(function(a, b) {
+            return a + b;
+          });
+          var avg = sum / data.length;
+          console.log("Avg:"+avg);
+          
+          this.avg=avg
         })
         .finally(() => {
           this.axios
@@ -130,7 +172,7 @@ export default {
               sensor.register = formatDate;
               this.sensor = sensor;
               console.log(sensor.location.x);
-              
+
               var o = Math.round,
                 r = Math.random,
                 s = 255;
@@ -160,7 +202,7 @@ export default {
     }
   },
   mounted() {
-    this.getReading('setup')
+    this.getReading("setup");
   },
   components: {
     lineChart,

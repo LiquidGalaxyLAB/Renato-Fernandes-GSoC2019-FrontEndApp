@@ -17,13 +17,9 @@
           ></v-text-field>
           <v-btn color="success" @click="login">Login</v-btn>
         </v-form>
-        <br>
-        <br>
-        <v-alert
-          :value="showAlert"
-          type="error"
-          transition="scale-transition"
-        >Invalid credentials</v-alert>
+        <br />
+        <br />
+        <v-alert :value="showAlert" type="error" transition="scale-transition">Invalid credentials</v-alert>
       </v-flex>
     </v-layout>
   </v-container>
@@ -36,24 +32,31 @@ export default {
     user: "",
     valid: true,
     show1: false,
-    showAlert:false
+    showAlert: false
   }),
   methods: {
     login() {
       this.axios
-        .post("http://localhost:8888/auth/login", {
-          name: this.user,
-          password: this.pass
-        },{ withCredentials: true })
-        .then((result) => {
+        .post(
+          "http://localhost:8888/auth/login",
+          {
+            name: this.user,
+            password: this.pass
+          },
+          { withCredentials: true }
+        )
+        .then(result => {
           console.log(result);
 
-          window.location.href="/dashboard"
-        }).catch(()=>{
-          console.log("Porra");
-          
-          this.showAlert=true
+          this.$router.push({ path: "dashboard" }, () => {
+            this.$router.go();
+          });
         })
+        .catch(() => {
+          console.log("Porra");
+
+          this.showAlert = true;
+        });
     }
   }
 };
