@@ -45,10 +45,8 @@ export default {
   methods: {
     deleteSensor() {
       this.axios
-        .delete("http://localhost:8888/data/deletesensor", {
-          data: { name: this.title },
-          
-        },{withCredentials: true})
+        .post("http://localhost:8888/data/deletesensor",
+          { name: this.title },{withCredentials: true})
         .then(() => {
           this.$router.go();
         });
