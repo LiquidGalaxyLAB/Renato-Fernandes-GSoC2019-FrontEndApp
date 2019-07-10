@@ -45,8 +45,10 @@ export default {
   methods: {
     deleteSensor() {
       this.axios
-        .post("http://localhost:8888/data/deletesensor",
-          { name: this.title },{withCredentials: true})
+        .delete(process.env.VUE_APP_backEnd+"/data/deletesensor", {
+          data: { name: this.title },
+          withCredentials: true
+        })
         .then(() => {
           this.$router.go();
         });
