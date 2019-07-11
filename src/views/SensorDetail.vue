@@ -52,7 +52,7 @@
 
     <v-layout row wrap>
       <v-flex xs12>
-        <gmap :lat="sensor.location.x" :lng="sensor.location.y" :editable="false" />
+        <gmap :lat=parseFloat(sensor.y) :lng=parseFloat(sensor.x) :editable="false" />
       </v-flex>
     </v-layout>
   </v-container>
@@ -161,6 +161,8 @@ export default {
                 this.$options.propsData.name
             )
             .then(result => {
+              console.log(result);
+              
               var sensor = result.data.result;
               var date = new Date(sensor.register);
               var formatDate =
@@ -171,7 +173,7 @@ export default {
                 date.getFullYear();
               sensor.register = formatDate;
               this.sensor = sensor;
-              console.log(sensor.location.x);
+              console.log(sensor.x);
 
               var o = Math.round,
                 r = Math.random,

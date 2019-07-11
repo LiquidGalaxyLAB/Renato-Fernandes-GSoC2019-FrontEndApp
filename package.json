@@ -6,7 +6,7 @@
     "serve": "concurrently \"vue-cli-service serve\" \"nodemon --ignore sessions/ /mnt/d/Codes/Repositories/Renato-Fernandes-GSoC2019/server/index.js\" \"autossh -R s2os10fhgh:80:localhost:8888 serveo.net \"",
     "build": "vue-cli-service build",
     "lint": "vue-cli-service lint",
-    "site": "vue-cli-service serve",
+    "site": "vue-cli-service serve --port 8181",
     "prod": "vue-cli-service serve --mode production"
   },
   "dependencies": {

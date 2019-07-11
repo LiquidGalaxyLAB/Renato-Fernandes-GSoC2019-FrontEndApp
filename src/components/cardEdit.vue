@@ -44,14 +44,11 @@ export default {
   },
   methods: {
     deleteSensor() {
-      this.axios
-        .delete(process.env.VUE_APP_backEnd+"/data/deletesensor", {
-          data: { name: this.title },
-          withCredentials: true
-        })
-        .then(() => {
-          this.$router.go();
-        });
+      this.axios.delete(process.env.VUE_APP_backEnd + "/data/deletesensor", {
+        data: { name: this.title },
+        withCredentials: true
+      });
+      this.$router.go();
     }
   }
 };

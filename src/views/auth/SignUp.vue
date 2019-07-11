@@ -69,8 +69,13 @@ export default {
             password: this.pass
           })
           .then(result => {
-            window.location.href='/dashboard'
-          });
+            console.log("oie");
+            
+            window.location.href='/signin'
+          }).catch(err=>{
+            console.log(err);
+            
+          })
       } else {
         window.alert("not ok");
       }

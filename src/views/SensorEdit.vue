@@ -19,7 +19,7 @@
         <GridList />
       </v-flex>
       <v-flex xs12>
-        <gmap v-if="isFetching" :lat="lataux" :lng="lngaux" :editable="true" :setMark="true" />
+        <gmap v-if="isFetching" :lng="parseFloat(lataux)" :lat="parseFloat(lngaux)" :editable="true" :setMark="true" />
       </v-flex>
     </v-layout>
   </v-container>
@@ -94,12 +94,12 @@ export default {
             this.oldname = data.name;
             this.desc = data.description;
             this.img = data.imgId;
-            this.lataux = data.location.x;
-            this.lngaux = data.location.y;
+            this.lataux = data.x;
+            this.lngaux = data.y;
             GoogleMapsLoader.load(function(google) {
               vm.$store.state.latlng = new google.maps.LatLng(
-                data.location.x,
-                data.location.y
+                data.x,
+                data.y
               );
             });
             console.log(result);

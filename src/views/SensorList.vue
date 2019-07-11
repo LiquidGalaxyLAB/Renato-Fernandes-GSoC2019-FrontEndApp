@@ -8,7 +8,7 @@
 
     <v-layout row wrap>
       <v-flex sm4 v-for="(sensor, index) in sensorList" :key="index">
-        <cardSensor :title="sensor.name" state="Down" stateText="red--text" :imgId="sensor.imgId"/>
+        <cardSensor :title="sensor.name" state="Down" stateText="red--text" :imgId="sensor.imgid"/>
       </v-flex>
     </v-layout>
   </v-container>
