@@ -27,7 +27,6 @@ export default {
   },
   watch: {
     latLng() {
-      console.log("lat:" + this.latLng.lat() + " Long:" + this.latLng.lng());
     }
   },
   mounted: function() {
@@ -35,11 +34,7 @@ export default {
     var vm = this;
     var markers = [];
     var marker;
-          console.log({
-                lat: vm.$options.propsData.lat,
-                lng: vm.$options.propsData.lng
-              });
-    //console.log(vm.$options.propsData);
+
 
     GoogleMapsLoader.load(function(google) {
       let map = new google.maps.Map(document.getElementById("map"), {
@@ -54,8 +49,6 @@ export default {
           if (marker != null) {
             marker.setMap(null);
           }
-          //console.log(e.latLng);
-          //console.log(e);
 
           marker = new google.maps.Marker({
             position: e.latLng,

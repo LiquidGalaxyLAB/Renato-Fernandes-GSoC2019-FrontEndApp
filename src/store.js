@@ -13,7 +13,6 @@ export default new Vuex.Store({
   },
   mutations: {
     setUser(state,user){
-      console.log(user);
       state.user=user
     },
     setImg(state,imgID){
@@ -25,19 +24,13 @@ export default new Vuex.Store({
   },
   actions: {
     setUser({commit},payload){
-      console.log("setUser action");
-      console.log(payload);
       commit('setUser',payload)
     },
     setImg({commit},payload){
-      console.log("setimg action");
-      console.log(payload);
       commit('setImg',payload)
       
     },
     setCoord({commit},payload){
-      console.log("setCoord action");
-      console.log(payload);
       commit('setCoord',payload)
     }
   },

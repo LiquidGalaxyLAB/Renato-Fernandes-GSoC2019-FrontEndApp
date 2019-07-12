@@ -13,7 +13,6 @@
 export default {
   methods: {
     test(){
-      console.log(this.$store.state.user);
       
     }
   },

@@ -60,7 +60,6 @@ export default {
         this.valid = false;
       })
       .catch(err => {
-        console.log(err);
         this.valid = true;
       });
   }

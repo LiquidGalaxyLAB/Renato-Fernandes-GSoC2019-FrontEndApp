@@ -59,19 +59,16 @@ export default {
         unit: vue.unit,
         img: store.selectedimg
       };
-      console.log(data);
 
       this.axios
         .post(process.env.VUE_APP_backEnd+"/data/editsensor", data, {
           withCredentials: true
         })
         .then(result => {
-          console.log("Sucess!");
 
           window.location.href='/sensorlist'
         })
         .catch(err => {
-          console.log(err);
         });
     }
   },
@@ -80,7 +77,6 @@ export default {
     this.axios
       .get(process.env.VUE_APP_backEnd+"/auth/check", { withCredentials: true })
       .then(result => {
-        console.log(this.$options.propsData.nameOld);
         this.axios
           .get(
             process.env.VUE_APP_backEnd+"/getSensorInfo?name=" +
@@ -102,21 +98,16 @@ export default {
                 data.y
               );
             });
-            console.log(result);
             setInterval(() => {
-              console.log(this.$store.state.latlng);
             }, 1000);
 
             this.isFetching = true;
           })
           .catch(err => {
-            console.log(err);
           });
       })
       .catch(err => {
-        console.log("Erro");
 
-        console.log(err);
         window.location.href = "/signin";
       });
   },

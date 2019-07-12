@@ -42,9 +42,7 @@ export default {
       return images;
     },
     onSelectImage: function(v) {
-      //console.log(v);
       this.selected=v.id
-      //console.log(this.selected);
       this.$store.dispatch("setImg", this.selected)
       
     }
@@ -53,7 +51,6 @@ export default {
     this.imagelist = this.images(
       require.context("../assets/sensorimg", false, /\.(png|jpe?g|svg)$/)
     );
-    //console.log(this.imagelist);
   }
 };
 </script>

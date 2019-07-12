@@ -46,14 +46,12 @@ export default {
           { withCredentials: true }
         )
         .then(result => {
-          console.log(result);
 
           this.$router.push({ path: "dashboard" }, () => {
             this.$router.go();
           });
         })
         .catch(() => {
-          console.log("Porra");
 
           this.showAlert = true;
         });

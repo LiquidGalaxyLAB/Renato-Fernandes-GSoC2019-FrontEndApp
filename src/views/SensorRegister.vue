@@ -53,12 +53,8 @@ export default {
       };
       this.axios.post(process.env.VUE_APP_backEnd+"/data/registersensor",data,{withCredentials: true})
       .then(result=>{
-        console.log("Sucess!");
         
         window.location.href='/sensorlist'
-      }).catch(err=>{
-        console.log(err);
-        
       })
     }
   },
@@ -66,7 +62,6 @@ export default {
     this.axios
       .get(process.env.VUE_APP_backEnd+"/auth/check", { withCredentials: true })
       .then(result => {
-        console.log("ok");
       })
       .catch(err => {
         window.location.href = "/signin";

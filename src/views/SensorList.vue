@@ -24,7 +24,6 @@ export default {
     };
   },
   mounted() {
-    console.log(process.env.VUE_APP_backEnd);
     
     this.axios
       .get(process.env.VUE_APP_backEnd+"/getAllSensors")

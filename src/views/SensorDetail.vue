@@ -79,38 +79,39 @@ export default {
   },
   methods: {
     getReading: function(dateSpan) {
-      console.log(typeof dateSpan);
 
       var post =
         process.env.VUE_APP_backEnd+"/readSensor?name=" + this.$options.propsData.name;
       if (dateSpan != "setup") {
-        console.log("here!");
 
         post += "&datespan=" + dateSpan;
       }
       post = encodeURI(post);
-      console.log(post);
+      
 
       this.axios
         .get(post)
         .then(result => {
-          console.log(result);
+          
+          
           var data = [];
           var labels = [];
-          let readings = result.data.result;
+          let readings = result.data.result ;
           var j = 0;
-          console.log(readings.length);
-
+          
           if (readings.length == 0) {
-            console.log("nope");
             this.hasRead = false;
           } else {
             this.hasRead = true;
           }
           if (dateSpan == "setup") {
-            for (var i = readings.length; j < 10; i--, j++) {
+            
+            readings.reverse()
+            for (var i = readings.length; j < 10 && i != 0; i--, j++) {
+              
               var aux = readings[i - 1];
-              data.push(aux.value);
+              
+              data.push(parseFloat(aux.value));
               var date = new Date(aux.date);
               labels.push(
                 date.getDate() +
@@ -122,7 +123,7 @@ export default {
             }
           } else {
             readings.forEach(element => {
-              data.push(element.value);
+              data.push(parseFloat( element.value));
               var date = new Date(element.date);
               labels.push(
                 date.getDate() +
@@ -135,8 +136,8 @@ export default {
           }
           this.data = data;
           this.labels = labels;
-          console.log(Math.min(...data));
-          console.log(labels[data.indexOf(Math.min(...data))]);
+          
+          
           this.min =
             Math.min(...data) +
             " on " +
@@ -150,7 +151,6 @@ export default {
             return a + b;
           });
           var avg = sum / data.length;
-          console.log("Avg:"+avg);
           
           this.avg=avg
         })
@@ -161,7 +161,6 @@ export default {
                 this.$options.propsData.name
             )
             .then(result => {
-              console.log(result);
               
               var sensor = result.data.result;
               var date = new Date(sensor.register);
@@ -173,7 +172,6 @@ export default {
                 date.getFullYear();
               sensor.register = formatDate;
               this.sensor = sensor;
-              console.log(sensor.x);
 
               var o = Math.round,
                 r = Math.random,

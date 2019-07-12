@@ -29,13 +29,10 @@ export default {
         this.axios
       .get(process.env.VUE_APP_backEnd+"/auth/check", { withCredentials: true })
       .catch(err => {
-        console.log("Erro");
-        console.log(err);
         window.location.href = "/signin";
       });
     setInterval(() => {
       var b = new Date();
-      //console.log(b);
       this.date = b.getHours() + ":" + b.getMinutes() + ":" + b.getSeconds();
     }, 1000);
 
@@ -45,12 +42,10 @@ export default {
       this.axios
         .get(process.env.VUE_APP_backEnd+"/auth/logout", { withCredentials: true })
         .then(result => {
-          console.log(result);
           //this.$router.push({name:"signin"})
           window.location.href = "/signin";
         })
         .catch(() => {
-          console.log("Porra");
 
           this.showAlert = true;
         });

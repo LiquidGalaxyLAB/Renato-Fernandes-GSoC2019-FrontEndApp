@@ -46,9 +46,7 @@ export default {
   watch: {
     user: function(text){
       this.checkUser(text).then((result)=>{
-        console.log(result);
       }).catch(()=>{
-        console.log('SAUHSUHA');
         
       })
 
@@ -69,11 +67,9 @@ export default {
             password: this.pass
           })
           .then(result => {
-            console.log("oie");
             
             window.location.href='/signin'
           }).catch(err=>{
-            console.log(err);
             
           })
       } else {
@@ -81,7 +77,6 @@ export default {
       }
     },
     checkUser: function(v) {
-      console.log(v);
       if (v != "") {
         return new Promise((resolve, reject) => {
           this.axios
