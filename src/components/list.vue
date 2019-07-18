@@ -5,7 +5,7 @@
         <h3 class="text-xs-center">{{title}}</h3>
       </v-flex>
       <v-spacer></v-spacer>
-      <v-btn color="success"  round :href="'/'+title+'/sensorDetail'">See details</v-btn>
+      <v-btn color="success"  round :href="'/front/'+title+'/sensorDetail'">See details</v-btn>
     </v-layout>
   </v-alert>
 </template>

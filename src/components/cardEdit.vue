@@ -19,8 +19,8 @@
       </div>
     </v-card-title>
     <v-card-actions>
-      <v-btn flat color="orange" :href="'/'+title+'/sensorDetail'">See Details</v-btn>
-      <v-btn flat color="success" :href="'/'+title+'/editsensor'">Edit</v-btn>
+      <v-btn flat color="orange" :href="'/front/'+title+'/sensorDetail'">See Details</v-btn>
+      <v-btn flat color="success" :href="'/front/'+title+'/editsensor'">Edit</v-btn>
       <v-btn flat color="error" @click="deleteSensor">Delete</v-btn>
     </v-card-actions>
   </v-card>
