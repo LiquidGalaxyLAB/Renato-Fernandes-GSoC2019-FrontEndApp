@@ -16,6 +16,7 @@
             box
           ></v-text-field>
           <v-btn color="success" @click="login">Login</v-btn>
+          <v-btn outline color="indigo" href="/front/signup">Create Account</v-btn>
         </v-form>
         <br />
         <br />

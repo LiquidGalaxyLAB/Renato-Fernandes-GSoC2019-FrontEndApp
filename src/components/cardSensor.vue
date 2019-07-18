@@ -19,7 +19,7 @@
       </div>
     </v-card-title>
     <v-card-actions>
-      <v-btn flat color="orange" :href="'/'+title+'/sensorDetail'">See Details</v-btn>
+      <v-btn flat color="orange" :href="'/front/'+title+'/sensorDetail'">See Details</v-btn>
     </v-card-actions>
   </v-card>
 </template>

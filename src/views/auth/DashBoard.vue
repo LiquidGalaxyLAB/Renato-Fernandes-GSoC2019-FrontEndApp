@@ -34,7 +34,7 @@ export default {
         withCredentials: true
       })
       .catch(err => {
-        window.location.href = "/signin";
+        window.location.href="/front/signin";
       });
     setInterval(() => {
       var b = new Date();

@@ -7,17 +7,17 @@
       </v-toolbar-title>
       <v-spacer></v-spacer>
 
-      <v-btn flat href="/sensorlist" color="primary">
+      <v-btn flat href="/front/sensorlist" color="primary">
         <span class="mr-2 blue--text">Sensor List</span>
       </v-btn>
-      <v-btn flat href="/map" color="primary">
+      <v-btn flat href="/front/map" color="primary">
         <span class="mr-2 blue--text">Sensor Map</span>
       </v-btn>
-      <v-btn v-if="valid" flat href="/signin" color="primary">
+      <v-btn v-if="valid" flat href="/front/signin" color="primary">
         <span class="mr-2 blue--text">Signin</span>
       </v-btn>
       <template v-else>
-        <v-btn flat href="/dashboard" color="primary">
+        <v-btn flat href="/front/dashboard" color="primary">
           <span class="mr-2 blue--text">Dashboard</span>
         </v-btn>
         <v-btn color="error" @click="logout">logout</v-btn>
@@ -59,7 +59,7 @@ export default {
         })
         .then(result => {
           //this.$router.push({name:"signin"})
-          window.location.href = "/signin";
+          window.location.href="/front/signin";
         })
         .catch(() => {
           this.showAlert = true;
