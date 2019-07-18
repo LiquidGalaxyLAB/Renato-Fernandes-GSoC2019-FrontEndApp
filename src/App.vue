@@ -10,15 +10,18 @@
       <v-btn flat href="/sensorlist" color="primary">
         <span class="mr-2 blue--text">Sensor List</span>
       </v-btn>
+      <v-btn flat href="/map" color="primary">
+        <span class="mr-2 blue--text">Sensor Map</span>
+      </v-btn>
       <v-btn v-if="valid" flat href="/signin" color="primary">
         <span class="mr-2 blue--text">Signin</span>
       </v-btn>
-      <v-btn v-else flat href="/dashboard" color="primary">
-        <span class="mr-2 blue--text">Dashboard</span>
-      </v-btn>
-      <v-btn flat href="/about" color="primary">
-        <span class="mr-2 blue--text">About</span>
-      </v-btn>
+      <template v-else>
+        <v-btn flat href="/dashboard" color="primary">
+          <span class="mr-2 blue--text">Dashboard</span>
+        </v-btn>
+        <v-btn color="error" @click="logout">logout</v-btn>
+      </template>
     </v-toolbar>
 
     <v-content>
@@ -48,9 +51,23 @@ export default {
   methods: {
     home: function() {
       this.$router.push({ name: "home" });
+    },
+    logout: function() {
+      this.axios
+        .get(process.env.VUE_APP_backEnd + "/auth/logout", {
+          withCredentials: true
+        })
+        .then(result => {
+          //this.$router.push({name:"signin"})
+          window.location.href = "/signin";
+        })
+        .catch(() => {
+          this.showAlert = true;
+        });
     }
   },
   created() {
+    let vm = this;
     this.axios
       .get(process.env.VUE_APP_backEnd + "/auth/check", {
         withCredentials: true
@@ -61,6 +78,36 @@ export default {
       })
       .catch(err => {
         this.valid = true;
+      });
+    this.axios
+      .get(process.env.VUE_APP_backEnd + "/getAllSensors")
+      .then(result => {
+        var formdata = new FormData();
+        formdata.append("name", "renato");
+        console.log(result);
+        let data = result.data.result;
+        vm.axios
+          .post(process.env.VUE_APP_ericbe + "/kml/manage/new", formdata)
+          .then(re => {
+            console.log(re);
+
+            data.forEach(element => {
+              formdata = new FormData();
+              formdata.append("id", Math.random() * (999 - 1) + 1);
+              formdata.append("name", element.name);
+              formdata.append("longitude", element.x);
+              formdata.append("latitude", element.y);
+              formdata.append("range", 0);
+              formdata.append("altMode", "relativeToGround");
+              formdata.append("description", "");
+              formdata.append("icon", "");
+              vm.axios
+                .post(
+                  process.env.VUE_APP_ericbe + "/kml/builder/addplacemark",
+                  formdata
+                )
+            });
+          });
       });
   }
 };

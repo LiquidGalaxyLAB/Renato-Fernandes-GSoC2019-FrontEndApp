@@ -6,9 +6,9 @@
       </v-flex>
     </v-layout>
 
-    <v-layout row wrap>
+    <v-layout align-space-around justify-space-around column fill-height>
       <v-flex sm4 v-for="(sensor, index) in sensorList" :key="index">
-        <cardSensor :title="sensor.name" state="Down" stateText="red--text" :imgId="sensor.imgid"/>
+        <list :title="sensor.name"/>
       </v-flex>
     </v-layout>
   </v-container>
@@ -16,6 +16,7 @@
 
 <script>
 import cardSensor from "../components/cardSensor";
+import list from "../components/list"
 export default {
   data() {
     return {
@@ -35,7 +36,8 @@ export default {
       });
   },
   components: {
-    cardSensor
+    cardSensor,
+    list
   }
 };
 </script>

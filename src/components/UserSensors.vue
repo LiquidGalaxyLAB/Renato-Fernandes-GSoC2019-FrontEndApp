@@ -2,10 +2,10 @@
   <v-container grid-list-xl>
     <v-layout row wrap>
       <v-flex xl12>
-        <h1 class="text-xs-center display-1">Sensor list</h1>
+        <h1 class="text-xs-center display-1">Your sensors</h1>
       </v-flex>
     </v-layout>
-
+    <v-divider></v-divider>
     <v-layout row wrap>
       <v-flex sm4 v-for="(sensor, index) in sensorList" :key="index" xl3>
         <cardSensor :title="sensor.name" state="Down" stateText="red--text" :imgId="sensor.imgid"/>
@@ -15,7 +15,7 @@
 </template>
 
 <script>
-import cardSensor from "../components/cardEdit";
+import cardSensor from "./cardEdit";
 export default {
   data() {
     return {

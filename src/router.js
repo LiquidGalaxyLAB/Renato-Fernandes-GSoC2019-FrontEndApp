@@ -14,9 +14,9 @@ export default new Router({
       component: Home
     },
     {
-      path: '/about',
-      name: 'about',
-      component: () => import('./views/About.vue')
+      path: '/map',
+      name: 'map',
+      component: () => import('./views/map.vue')
     },
     {
       path: '/:name/sensorDetail',
@@ -45,10 +45,6 @@ export default new Router({
       path: '/sensorregister',
       name : 'sensorregister',
       component: ()=>import('./views/SensorRegister.vue')
-    },{
-      path: '/usersensors',
-      name : 'usersensors',
-      component: ()=>import('./views/UserSensors.vue')
     },{
       path: '/:nameOld/editsensor',
       name : 'editsensor',

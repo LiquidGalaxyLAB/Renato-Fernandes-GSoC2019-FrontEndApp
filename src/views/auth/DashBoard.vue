@@ -8,16 +8,19 @@
       </v-flex>
       <v-flex xs4>
         <v-layout align-space-around justify-space-around column fill-height>
-          <v-btn color="info" to='/sensorregister'>Register sensor</v-btn>
-          <v-btn color="info" to='/usersensors'>Edit Sensor</v-btn>
-          <v-btn color="error" @click="logout">logout</v-btn>
+          <v-btn color="info" to="/sensorregister">Register sensor</v-btn>
         </v-layout>
       </v-flex>
     </v-layout>
+      <br>
+      <br>
+      <br>
+      <editlist/>
   </v-container>
 </template>
 
 <script>
+import editlist from "../../components/UserSensors";
 export default {
   data() {
     return {
@@ -26,8 +29,10 @@ export default {
     };
   },
   created() {
-        this.axios
-      .get(process.env.VUE_APP_backEnd+"/auth/check", { withCredentials: true })
+    this.axios
+      .get(process.env.VUE_APP_backEnd + "/auth/check", {
+        withCredentials: true
+      })
       .catch(err => {
         window.location.href = "/signin";
       });
@@ -35,24 +40,9 @@ export default {
       var b = new Date();
       this.date = b.getHours() + ":" + b.getMinutes() + ":" + b.getSeconds();
     }, 1000);
-
   },
-  methods: {
-    logout: function() {
-      this.axios
-        .get(process.env.VUE_APP_backEnd+"/auth/logout", { withCredentials: true })
-        .then(result => {
-          //this.$router.push({name:"signin"})
-          window.location.href = "/signin";
-        })
-        .catch(() => {
-
-          this.showAlert = true;
-        });
-    }
-  },
-  beforeMount() {
-
-  },
+  components: {
+    editlist
+  }
 };
 </script>
