@@ -8,7 +8,7 @@
       </v-flex>
       <v-flex xs4>
         <v-layout align-space-around justify-space-around column fill-height>
-          <v-btn color="info" to="/sensorregister">Register sensor</v-btn>
+          <v-btn color="info" to="/front/sensorregister">Register sensor</v-btn>
         </v-layout>
       </v-flex>
     </v-layout>
@@ -34,7 +34,7 @@ export default {
         withCredentials: true
       })
       .catch(err => {
-        window.location.href = "/signin";
+        window.location.href = "/front/signin";
       });
     setInterval(() => {
       var b = new Date();

@@ -59,7 +59,7 @@ export default {
         })
         .then(result => {
           //this.$router.push({name:"signin"})
-          window.location.href = "/signin";
+          window.location.href = "/front/signin";
         })
         .catch(() => {
           this.showAlert = true;

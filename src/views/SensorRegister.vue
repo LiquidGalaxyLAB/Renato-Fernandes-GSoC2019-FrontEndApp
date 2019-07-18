@@ -64,7 +64,7 @@ export default {
       .then(result => {
       })
       .catch(err => {
-        window.location.href = "/signin";
+        window.location.href = "/front/signin";
       });
   },
   components: {

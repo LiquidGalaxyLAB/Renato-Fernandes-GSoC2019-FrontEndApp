@@ -108,7 +108,7 @@ export default {
       })
       .catch(err => {
 
-        window.location.href = "/signin";
+        window.location.href = "/front/signin";
       });
   },
   components: {
