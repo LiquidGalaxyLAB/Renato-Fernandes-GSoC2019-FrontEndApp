@@ -33,22 +33,27 @@ export default new Router({
       path: '/front/signup',
       name: 'SignUp',
       component: () => import('./views/auth/SignUp.vue')
-    },{
+    }, {
       path: '/front/signin',
       name: 'signin',
-      component: ()=> import('./views/auth/SignIn.vue')
-    },{
+      component: () => import('./views/auth/SignIn.vue')
+    }, {
       path: '/front/dashboard',
-      name : 'dashboard',
-      component: ()=>import('./views/auth/DashBoard.vue')
-    },{
+      name: 'dashboard',
+      component: () => import('./views/auth/DashBoard.vue')
+    }, {
       path: '/front/sensorregister',
-      name : 'sensorregister',
-      component: ()=>import('./views/SensorRegister.vue')
-    },{
+      name: 'sensorregister',
+      component: () => import('./views/SensorRegister.vue')
+    }, {
       path: '/front/:nameOld/editsensor',
-      name : 'editsensor',
-      component: ()=>import('./views/SensorEdit.vue'),
+      name: 'editsensor',
+      component: () => import('./views/SensorEdit.vue'),
+      props: true
+    }, {
+      path: '/front/:name/lgDetail',
+      name: 'SensorDetail',
+      component: () => import('./views/lgDetail.vue'),
       props: true
     }
   ]

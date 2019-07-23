@@ -7,15 +7,15 @@
     </v-layout>
     <v-divider></v-divider>
     <v-layout row wrap>
-      <v-flex sm4 v-for="(sensor, index) in sensorList" :key="index" xl3>
-        <cardSensor :title="sensor.name" state="Down" stateText="red--text" :imgId="sensor.imgid"/>
+      <v-flex sm12 v-for="(sensor, index) in sensorList" :key="index" xl3>
+        <listEdit :title="sensor.name" state="Down" stateText="red--text" :imgId="sensor.imgid"/>
       </v-flex>
     </v-layout>
   </v-container>
 </template>
 
 <script>
-import cardSensor from "./cardEdit";
+import listEdit from "./listEdit";
 export default {
   data() {
     return {
@@ -34,7 +34,7 @@ export default {
       });
   },
   components: {
-    cardSensor
+    listEdit
   }
 };
 </script>

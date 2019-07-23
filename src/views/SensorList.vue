@@ -8,7 +8,12 @@
 
     <v-layout align-space-around justify-space-around column fill-height>
       <v-flex sm4 v-for="(sensor, index) in sensorList" :key="index">
-        <list :title="sensor.name"/>
+        <h1>{{sensor.name}}</h1>
+        <v-divider></v-divider>
+        <br />
+        <v-flex xs12 v-for="(name, index) in sensor.sensors" :key="index">
+          <list :title="name" />
+        </v-flex>
       </v-flex>
     </v-layout>
   </v-container>
@@ -16,7 +21,7 @@
 
 <script>
 import cardSensor from "../components/cardSensor";
-import list from "../components/list"
+import list from "../components/list";
 export default {
   data() {
     return {
@@ -25,10 +30,12 @@ export default {
     };
   },
   mounted() {
-    
     this.axios
-      .get(process.env.VUE_APP_backEnd+"/getAllSensors")
+      .get(process.env.VUE_APP_backEnd + "/getAllSensors")
       .then(response => {
+        console.log(response.data.result);
+        var sensorFormat = {};
+
         this.sensorList = response.data.result;
       })
       .catch(err => {

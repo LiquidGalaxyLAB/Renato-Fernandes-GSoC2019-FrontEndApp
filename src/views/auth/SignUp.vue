@@ -68,7 +68,7 @@ export default {
           })
           .then(result => {
             
-            window.location.href='/signin'
+            window.location.href='/front/signin'
           }).catch(err=>{
             
           })

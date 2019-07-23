@@ -1,63 +1,31 @@
 <template>
-  <v-container grid-list-xs>
     <v-layout row wrap>
-      <v-flex xs6>
-        <h1 class="font-weight-light">
+      <v-flex xs12>
+        <h1 class="font-weight-light display-3">
           Sensor Name: {{sensor.name}}
           <br />
         </h1>
-        <h3>Registered on: {{sensor.register}}</h3>
-        <h3>Description: {{sensor.description}}</h3>
+        <h3 class="font-weight-light display-3">Registered on: {{sensor.register}}</h3>
+        <h3 class="font-weight-light display-3">Description: {{sensor.description}}</h3>
         <v-divider></v-divider>
         <br />
         <br />
         <br />
         <v-flex xs12 v-if="hasRead">
-          <h3>Min reading:{{min}}</h3>
-          <h3>Max reading:{{max}}</h3>
-          <h3>Average: {{avg}}</h3>
+          <h3 class="font-weight-light display-3">Min reading: {{min}}</h3>
+          <h3 class="font-weight-light display-3 red--text darken-4">Max reading: {{max}}</h3>
+          <h3 class="font-weight-light display-3">Average: {{avg}}</h3>
         </v-flex>
         <v-flex xs12 v-else>
-          <h3>The sensor has no reading for the time</h3>
+          <h3 class="font-weight-light display-3 ">The sensor has no reading for the time</h3>
         </v-flex>
       </v-flex>
 
-      <v-flex xs6>
-        <lineChart id="chart" :chart-data="datacol" />
-        <v-layout row wrap align-center justify-center>
-          <v-btn-toggle v-model="toggle_exclusive" justify-center>
-            <v-btn flat v-on:click="getReading('setup')">
-              <span>all</span>
-            </v-btn>
-            <v-btn flat v-on:click="getReading('1y')">
-              <span>1y</span>
-            </v-btn>
-            <v-btn flat v-on:click="getReading('6m')">
-              <span>6m</span>
-            </v-btn>
-            <v-btn flat v-on:click="getReading('1m')">
-              <span>1m</span>
-            </v-btn>
-            <v-btn flat v-on:click="getReading('1w')">
-              <span>1w</span>
-            </v-btn>
-            <v-btn flat v-on:click="getReading('1d')">
-              <span>1d</span>
-            </v-btn>
-          </v-btn-toggle>
-        </v-layout>
-      </v-flex>
-    </v-layout>
-    <br />
-    <br />
-    <br />
-
-    <v-layout row wrap>
       <v-flex xs12>
-        <gmap :lat="parseFloat(sensor.y)" :lng="parseFloat(sensor.x)" :editable="false" />
+        <lineChart id="chart" :chart-data="datacol" />
       </v-flex>
     </v-layout>
-  </v-container>
+
 </template>
 
 <script>
@@ -193,33 +161,6 @@ export default {
                   }
                 ]
               };
-              this.axios
-                .post(process.env.VUE_APP_backEnd+"/movelg", {
-                  lat: sensor.y,
-                  lng: sensor.x,
-                  host:process.env.VUE_APP_masterIp,
-                  username:process.env.VUE_APP_user,
-                  password:process.env.VUE_APP_key
-                })
-                .then(() => {
-                  console.log("ue");
-                  console.log(window.location.pathname)
-                  console.log(encodeURI(process.env.VUE_APP_localip+'/front/'+this.sensor.name+'lgDetail'));
-                  var env =process.env
-                  this.axios.post(env.VUE_APP_backEnd+"/opensite", {
-                    serverurl:encodeURI(env.VUE_APP_localip+'/front/'+this.sensor.name+'/lgDetail'),
-                    lgurl: env.VUE_APP_slaveIp,
-                    lguser:env.VUE_APP_user,
-                    lgkey:env.VUE_APP_key
-                  }).then(()=>{
-                    console.log('finally')
-                  });
-                })
-                .catch(err => {
-                  console.log('here');
-                  
-                  console.log(err);
-                });
             });
         });
     }

@@ -54,7 +54,7 @@ export default {
       this.axios.post(process.env.VUE_APP_backEnd+"/data/registersensor",data,{withCredentials: true})
       .then(result=>{
         
-        window.location.href='/sensorlist'
+        window.location.href='/front/sensorlist'
       })
     }
   },

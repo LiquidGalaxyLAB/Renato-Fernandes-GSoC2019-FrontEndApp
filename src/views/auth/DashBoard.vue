@@ -6,16 +6,18 @@
         <br />
         <h5 class="body-2">It's {{this.date}} now</h5>
       </v-flex>
-      <v-flex xs4>
-        <v-layout align-space-around justify-space-around column fill-height>
-          <v-btn color="info" to="/front/sensorregister">Register sensor</v-btn>
-        </v-layout>
+    </v-layout>
+    <br />
+    <br />
+    <br />
+    <editlist />
+    <v-layout align-center justify-end row fill-height>
+      <v-flex xs12>
+        <v-btn outline large fab color="indigo" to="/front/sensorregister">
+          <v-icon>playlist_add</v-icon>
+        </v-btn>
       </v-flex>
     </v-layout>
-      <br>
-      <br>
-      <br>
-      <editlist/>
   </v-container>
 </template>
 

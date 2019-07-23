@@ -66,7 +66,7 @@ export default {
         })
         .then(result => {
 
-          window.location.href='/sensorlist'
+          window.location.href='/front/sensorlist'
         })
         .catch(err => {
         });
