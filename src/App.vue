@@ -7,7 +7,7 @@
       </v-toolbar-title>
       <v-spacer></v-spacer>
 
-      <v-btn flat href="/front/sensorlist" color="primary">
+      <v-btn flat to="/front/sensorlist" color="primary">
         <span class="mr-2 blue--text">Sensor List</span>
       </v-btn>
       <v-btn flat href="/front/map" color="primary">
@@ -101,14 +101,14 @@ export default {
               formdata.append("altMode", "relativeToGround");
               formdata.append("description", "");
               formdata.append("icon", "");
-              vm.axios
-                .post(
-                  process.env.VUE_APP_ericbe + "/kml/builder/addplacemark",
-                  formdata
-                )
+              vm.axios.post(
+                process.env.VUE_APP_ericbe + "/kml/builder/addplacemark",
+                formdata
+              );
             });
           });
       });
-  }
+  },
+
 };
 </script>

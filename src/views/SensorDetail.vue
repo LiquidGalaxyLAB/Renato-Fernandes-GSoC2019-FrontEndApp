@@ -20,6 +20,9 @@
         <v-flex xs12 v-else>
           <h3>The sensor has no reading for the time</h3>
         </v-flex>
+        <v-btn flat v-on:click="closeSite()">
+          <span>Close site</span>
+        </v-btn>
       </v-flex>
 
       <v-flex xs6>
@@ -80,7 +83,7 @@ export default {
     name: String
   },
   methods: {
-    getReading: function(dateSpan) {
+    getReading(dateSpan) {
       var post =
         process.env.VUE_APP_backEnd +
         "/readSensor?name=" +
@@ -194,33 +197,59 @@ export default {
                 ]
               };
               this.axios
-                .post(process.env.VUE_APP_backEnd+"/movelg", {
+                .post(process.env.VUE_APP_backEnd + "/movelg", {
                   lat: sensor.y,
                   lng: sensor.x,
-                  host:process.env.VUE_APP_masterIp,
-                  username:process.env.VUE_APP_user,
-                  password:process.env.VUE_APP_key
+                  host: process.env.VUE_APP_masterIp,
+                  username: process.env.VUE_APP_user,
+                  password: process.env.VUE_APP_key
                 })
                 .then(() => {
                   console.log("ue");
-                  console.log(window.location.pathname)
-                  console.log(encodeURI(process.env.VUE_APP_localip+'/front/'+this.sensor.name+'lgDetail'));
-                  var env =process.env
-                  this.axios.post(env.VUE_APP_backEnd+"/opensite", {
-                    serverurl:encodeURI(env.VUE_APP_localip+'/front/'+this.sensor.name+'/lgDetail'),
-                    lgurl: env.VUE_APP_slaveIp,
-                    lguser:env.VUE_APP_user,
-                    lgkey:env.VUE_APP_key
-                  }).then(()=>{
-                    console.log('finally')
-                  });
+                  console.log(window.location.pathname);
+                  console.log(
+                    encodeURI(
+                      process.env.VUE_APP_localip +
+                        "/front/" +
+                        this.sensor.name +
+                        "lgDetail"
+                    )
+                  );
+                  var env = process.env;
+                  this.axios
+                    .post(env.VUE_APP_backEnd + "/opensite", {
+                      serverurl: encodeURI(
+                        env.VUE_APP_localip +
+                          "/front/" +
+                          this.sensor.name +
+                          "/lgDetail"
+                      ),
+                      lgurl: env.VUE_APP_slaveIp,
+                      lguser: env.VUE_APP_user,
+                      lgkey: env.VUE_APP_key
+                    })
+                    .then(() => {
+                      console.log("finally");
+                    });
                 })
                 .catch(err => {
-                  console.log('here');
-                  
+                  console.log("here");
+
                   console.log(err);
                 });
             });
+        });
+    },
+    closeSite() {
+      window.alert("que");
+      this.axios
+        .post(process.env.VUE_APP_backEnd + "/closesite", {
+          lgurl: process.env.VUE_APP_slaveIp,
+          lguser: process.env.VUE_APP_user,
+          lgkey: process.env.VUE_APP_key
+        })
+        .then(() => {
+          console.log("finally");
         });
     }
   },

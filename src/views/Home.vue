@@ -9,19 +9,27 @@
           to make the information about them ready and easy to read.
         </h3>
         <br />
+        <v-flex xs12>
+          <v-layout row wrap>
+            <v-flex xs6>
+              <v-img :src="require('../assets/inno4agro-logo.jpg')" />
+            </v-flex>
+            <v-flex xs6>
+              <v-img :src="require('../assets/liquidsensors.png')" />
+            </v-flex>
+          </v-layout>
+        </v-flex>
+        <br />
         <br />
         <v-divider></v-divider>
       </v-flex>
       <v-flex xs12 align-center justify-space-around row fill-height>
-        <br>
-        <br>
+        <br />
+        <br />
         <h2 class="text-xs-center display-2 font-weight-bold">Collaborators</h2>
       </v-flex>
       <v-flex xs12>
         <v-layout align-center justify-space-around row wrap fill-height>
-          <v-flex xs2>
-            <v-img :src="require('../assets/inno4agro-logo.jpg')" />
-          </v-flex>
           <v-flex xs2>
             <v-img :src="require('../assets/gsoc.png')" />
           </v-flex>
@@ -40,7 +48,7 @@
             <v-img :src="require('../assets/LOGO LIQUID GALAXY.jpg')" />
           </v-flex>
         </v-layout>
-        <br>
+        <br />
         <v-layout align-center justify-space-around row wrap fill-height>
           <v-flex xs3>
             <v-img :src="require('../assets/LogoLGEU.png')" />
@@ -61,8 +69,8 @@ export default {
   },
   data() {
     return {
-      imgsize:3
-    }
-  },
+      imgsize: 3
+    };
+  }
 };
 </script>

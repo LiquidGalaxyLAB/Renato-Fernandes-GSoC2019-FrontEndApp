@@ -1,31 +1,54 @@
 <template>
-    <v-layout row wrap>
-      <v-flex xs12>
-        <h1 class="font-weight-light display-3">
-          Sensor Name: {{sensor.name}}
-          <br />
-        </h1>
-        <h3 class="font-weight-light display-3">Registered on: {{sensor.register}}</h3>
-        <h3 class="font-weight-light display-3">Description: {{sensor.description}}</h3>
-        <v-divider></v-divider>
+  <v-layout row wrap>
+    <v-flex xs12>
+      <h1 class="font-weight-light display-3">
+        Sensor Name: {{sensor.name}}
         <br />
-        <br />
-        <br />
-        <v-flex xs12 v-if="hasRead">
-          <h3 class="font-weight-light display-3">Min reading: {{min}}</h3>
-          <h3 class="font-weight-light display-3 red--text darken-4">Max reading: {{max}}</h3>
-          <h3 class="font-weight-light display-3">Average: {{avg}}</h3>
-        </v-flex>
-        <v-flex xs12 v-else>
-          <h3 class="font-weight-light display-3 ">The sensor has no reading for the time</h3>
-        </v-flex>
-      </v-flex>
+      </h1>
+      <v-divider></v-divider>
+      <br />
+      <br />
+      <br />
 
-      <v-flex xs12>
+      <v-flex xs12 v-if="hasRead">
+        <v-layout row wrap align-center>
+          <v-flex xs12>
+            <h3 class="font-weight-light display-3 blue--text text-xs-center">Min {{min}}</h3>
+          </v-flex>
+          <v-flex xs4>
+            <h3 class="font-weight-light display-3">Average: {{avg}}</h3>
+          </v-flex>
+          <v-flex xs4>
+            <h3 class="font-weight-light display-3 red--text darken-4">Max reading: {{max}}</h3>
+          </v-flex>
+        </v-layout>
+      </v-flex>
+      <v-flex xs12 v-else>
+        <h3 class="font-weight-light display-3">The sensor has no reading for the time</h3>
+      </v-flex>
+    </v-flex>
+    <v-layout row wrap align-center>
+      <v-flex xs10 offset-xs1>
         <lineChart id="chart" :chart-data="datacol" />
       </v-flex>
     </v-layout>
-
+    <v-flex xs12>
+      <v-layout row wrap>
+        <v-flex xs3>
+          <v-img :src="require('../assets/inno4agro-logo.jpg')" />
+        </v-flex>
+        <v-flex xs3>
+          <v-img :src="require('../assets/gsoc.png')" />
+        </v-flex>
+        <v-flex xs3>
+          <v-img :src="require('../assets/LogoFACENS-1210x642.png')" />
+        </v-flex>
+        <v-flex xs3>
+          <v-img :src="require('../assets/LOGO LIQUID GALAXY.jpg')" />
+        </v-flex>
+      </v-layout>
+    </v-flex>
+  </v-layout>
 </template>
 
 <script>
@@ -102,14 +125,8 @@ export default {
           this.data = data;
           this.labels = labels;
 
-          this.min =
-            Math.min(...data) +
-            " on " +
-            labels[data.indexOf(Math.min(...data))];
-          this.max =
-            Math.max(...data) +
-            " on " +
-            labels[data.indexOf(Math.max(...data))];
+          this.min = Math.min(...data);
+          this.max = Math.max(...data);
 
           var sum = data.reduce(function(a, b) {
             return a + b;
