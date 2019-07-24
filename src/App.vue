@@ -80,8 +80,10 @@ export default {
         this.valid = true;
       });
     this.axios
-      .get(process.env.VUE_APP_backEnd + "/getAllSensors")
+      .get(process.env.VUE_APP_backEnd + "/getfullsensors")
       .then(result => {
+        console.log(result);
+        
         var formdata = new FormData();
         formdata.append("name", "renato");
         console.log(result);
@@ -99,8 +101,10 @@ export default {
               formdata.append("latitude", element.y);
               formdata.append("range", 0);
               formdata.append("altMode", "relativeToGround");
-              formdata.append("description", "");
+              formdata.append("description", element.description);
               formdata.append("icon", "");
+              console.log(formdata);
+              
               vm.axios.post(
                 process.env.VUE_APP_ericbe + "/kml/builder/addplacemark",
                 formdata
