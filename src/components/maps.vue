@@ -23,18 +23,17 @@ export default {
     lat: Number,
     lng: Number,
     editable: Boolean,
-    setMark: Boolean
+    setMark: Boolean,
+    img: String
   },
   watch: {
-    latLng() {
-    }
+    latLng() {}
   },
   mounted: function() {
-    
     var vm = this;
     var markers = [];
     var marker;
-
+    console.log(vm.$options.propsData);
 
     GoogleMapsLoader.load(function(google) {
       let map = new google.maps.Map(document.getElementById("map"), {
@@ -52,7 +51,8 @@ export default {
 
           marker = new google.maps.Marker({
             position: e.latLng,
-            map: map
+            map: map,
+            icon:vm.$options.propsData
           });
           vm.latLng = e.latLng;
           vm.$store.dispatch("setCoord", e.latLng);
@@ -63,16 +63,18 @@ export default {
               lat: vm.$options.propsData.lat,
               lng: vm.$options.propsData.lng
             },
-            map: map
+            map: map,
+            icon: vm.$options.propsData.img
           });
         }
       } else {
         marker = new google.maps.Marker({
           position: {
             lat: vm.$options.propsData.lat,
-            lng: vm.$options.propsData.lng
+            lng: vm.$options.propsData.lng,
           },
-          map: map
+          map: map,
+          icon: vm.$options.propsData.img
         });
       }
     });

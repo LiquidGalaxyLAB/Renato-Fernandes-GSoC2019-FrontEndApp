@@ -41,7 +41,7 @@ export default {
         }
       });
       vm.axios
-        .get(process.env.VUE_APP_backEnd + "/getAllSensors")
+        .get(process.env.VUE_APP_backEnd + "/getfullsensors")
         .then(response => {
           console.log(response.data.result);
           response = response.data.result;

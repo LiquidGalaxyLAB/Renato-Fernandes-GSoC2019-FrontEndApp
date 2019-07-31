@@ -4,12 +4,19 @@ import createPersistedState from 'vuex-persistedstate'
 
 Vue.use(Vuex)
 
-export default new Vuex.Store({
+const modA={
   state: {
     user:null,
     isLogged:false,
     selectedimg:null,
-    latlng:null
+    latlng:null,
+    ericbe:null,
+    masterIp:null,
+    slaveIp:null,
+    key:null,
+    lguser:null,
+    localip:null
+
   },
   mutations: {
     setUser(state,user){
@@ -38,4 +45,32 @@ export default new Vuex.Store({
 
   },
   plugins: [createPersistedState()]
+}
+
+
+const modB={
+  state: {
+    setkml:false,
+  },
+  mutations: {
+    
+  },
+  actions: {
+
+  },
+  getters: {
+
+  },
+ 
+}
+
+
+export default new Vuex.Store({
+  modules:{
+    a:modA,
+    b:modB
+  }
 })
+
+
+

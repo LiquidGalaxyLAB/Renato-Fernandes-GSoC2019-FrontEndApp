@@ -6,9 +6,11 @@
         <span class="font-weight-light">Summer of code</span>
       </v-toolbar-title>
       <v-spacer></v-spacer>
-
       <v-btn flat to="/front/sensorlist" color="primary">
         <span class="mr-2 blue--text">Sensor List</span>
+      </v-btn>
+      <v-btn flat color="primary" @click="generatekml()">
+        <span class="mr-2 blue--text">Generate kml</span>
       </v-btn>
       <v-btn flat href="/front/map" color="primary">
         <span class="mr-2 blue--text">Sensor Map</span>
@@ -64,10 +66,47 @@ export default {
         .catch(() => {
           this.showAlert = true;
         });
+    },
+    generatekml() {
+      let vm = this;
+      this.axios
+        .get(process.env.VUE_APP_backEnd + "/getfullsensors")
+        .then(result => {
+          console.log(result);
+
+          var formdata = new FormData();
+          console.log(result);
+          let data = result.data.result;
+          vm.axios
+            .post(process.env.VUE_APP_ericbe + "/kml/manage/new?name=renato", formdata)
+            .then(re => {
+              console.log(re);
+
+              data.forEach(element => {
+                console.log(element);
+                
+                formdata = new FormData();
+                formdata.append("id", element.sensorid);
+                formdata.append("name", element.name);
+                formdata.append("longitude", element.x);
+                formdata.append("latitude", element.y);
+                formdata.append("range", 0);
+                formdata.append("altMode", "relativeToGround");
+                formdata.append("description", element.description);
+                formdata.append("icon", element.imgid);
+                formdata.append('scale',1)
+                console.log(formdata);
+
+                vm.axios.post(
+                  process.env.VUE_APP_ericbe + "/kml/builder/addplacemark",
+                  formdata
+                );
+              });
+            });
+        });
     }
   },
   created() {
-    let vm = this;
     this.axios
       .get(process.env.VUE_APP_backEnd + "/auth/check", {
         withCredentials: true
@@ -79,40 +118,6 @@ export default {
       .catch(err => {
         this.valid = true;
       });
-    this.axios
-      .get(process.env.VUE_APP_backEnd + "/getfullsensors")
-      .then(result => {
-        console.log(result);
-        
-        var formdata = new FormData();
-        formdata.append("name", "renato");
-        console.log(result);
-        let data = result.data.result;
-        vm.axios
-          .post(process.env.VUE_APP_ericbe + "/kml/manage/new", formdata)
-          .then(re => {
-            console.log(re);
-
-            data.forEach(element => {
-              formdata = new FormData();
-              formdata.append("id", Math.random() * (999 - 1) + 1);
-              formdata.append("name", element.name);
-              formdata.append("longitude", element.x);
-              formdata.append("latitude", element.y);
-              formdata.append("range", 0);
-              formdata.append("altMode", "relativeToGround");
-              formdata.append("description", element.description);
-              formdata.append("icon", "");
-              console.log(formdata);
-              
-              vm.axios.post(
-                process.env.VUE_APP_ericbe + "/kml/builder/addplacemark",
-                formdata
-              );
-            });
-          });
-      });
-  },
-
+  }
 };
 </script>

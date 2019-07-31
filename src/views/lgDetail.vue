@@ -1,59 +1,91 @@
 <template>
-  <v-layout row wrap>
-    <v-flex xs12>
+  <v-layout row wrap fill-height>
+    <v-flex xs12 :v-if="sensor != null">
       <h1 class="font-weight-light display-3">
         Sensor Name: {{sensor.name}}
         <br />
+      </h1>
+      <h1 class="font-weight-light display-3">
+        Register: {{sensor.register}}
       </h1>
       <v-divider></v-divider>
       <br />
       <br />
       <br />
 
-      <v-flex xs12 v-if="hasRead">
+      <v-flex xs12 v-if="hasRead" text-xs-center>
         <v-layout row wrap align-center>
-          <v-flex xs12>
-            <h3 class="font-weight-light display-3 blue--text text-xs-center">Min {{min}}</h3>
+          <v-flex xs4>
+            <h3 class="text-xs-center font-weight-light display-3 blue--text font-weight-black">MIN</h3>
           </v-flex>
           <v-flex xs4>
-            <h3 class="font-weight-light display-3">Average: {{avg}}</h3>
+            <h3 class="font-weight-light display-3 text-center font-weight-black">AVG</h3>
           </v-flex>
           <v-flex xs4>
-            <h3 class="font-weight-light display-3 red--text darken-4">Max reading: {{max}}</h3>
+            <h3
+              class="font-weight-light display-3 red--text darken-4 text-center font-weight-black"
+            >MAX</h3>
           </v-flex>
         </v-layout>
       </v-flex>
+      <v-flex xs12 v-if="hasRead" text-xs-center>
+        <v-layout row wrap>
+          <v-flex xs4>
+            <h3 class="font-weight-light display-4 blue--text text-center ">{{min}} {{sensor.unit}}</h3>
+          </v-flex>
+          <v-flex xs4>
+            <h3 class="font-weight-light display-4 text-center ">{{avg}} {{sensor.unit}}</h3>
+          </v-flex>
+          <v-flex xs4>
+            <h3
+              class="font-weight-light display-4 red--text darken-4 text-center "
+            >{{max}} {{sensor.unit}}</h3>
+          </v-flex>
+        </v-layout>
+      </v-flex>
+
       <v-flex xs12 v-else>
         <h3 class="font-weight-light display-3">The sensor has no reading for the time</h3>
       </v-flex>
     </v-flex>
-    <v-layout row wrap align-center>
+    <br />
+    <br />
+
+    <v-layout row wrap fill-height>
       <v-flex xs10 offset-xs1>
         <lineChart id="chart" :chart-data="datacol" />
+        <v-spacer></v-spacer>
+      </v-flex>
+      <v-flex xs12 >
+        <v-layout row wrap>
+          <v-flex xs3>
+            <v-img :src="require('../assets/inno4agro-logo.jpg')" />
+          </v-flex>
+          <v-flex xs3>
+            <v-img :src="require('../assets/gsoc.png')" />
+          </v-flex>
+          <v-flex xs3>
+            <v-img :src="require('../assets/LogoFACENS-1210x642.png')" />
+          </v-flex>
+          <v-flex xs3>
+            <v-img :src="require('../assets/LOGO LIQUID GALAXY.jpg')" />
+          </v-flex>
+        </v-layout>
       </v-flex>
     </v-layout>
-    <v-flex xs12>
-      <v-layout row wrap>
-        <v-flex xs3>
-          <v-img :src="require('../assets/inno4agro-logo.jpg')" />
-        </v-flex>
-        <v-flex xs3>
-          <v-img :src="require('../assets/gsoc.png')" />
-        </v-flex>
-        <v-flex xs3>
-          <v-img :src="require('../assets/LogoFACENS-1210x642.png')" />
-        </v-flex>
-        <v-flex xs3>
-          <v-img :src="require('../assets/LOGO LIQUID GALAXY.jpg')" />
-        </v-flex>
-      </v-layout>
-    </v-flex>
   </v-layout>
 </template>
 
+<style>
+.teste {
+  display: fixed !important;
+  bottom: 0 !important;
+}
+</style>
+
+
 <script>
 import lineChart from "../components/charts/lineChart";
-import gmap from "../components/maps";
 export default {
   data() {
     return {
@@ -64,11 +96,14 @@ export default {
       max: null,
       min: null,
       avg: null,
-      hasRead: false
+      hasRead: false,
+      minlbl: null,
+      maxlbl: null
     };
   },
   props: {
-    name: String
+    name: String,
+    time:String
   },
   methods: {
     getReading: function(dateSpan) {
@@ -127,13 +162,14 @@ export default {
 
           this.min = Math.min(...data);
           this.max = Math.max(...data);
-
+          this.minlbl = labels[data.indexOf(Math.min(...data))];
+          this.maxlbl = labels[data.indexOf(Math.max(...data))];
           var sum = data.reduce(function(a, b) {
             return a + b;
           });
           var avg = sum / data.length;
 
-          this.avg = avg;
+          this.avg = Math.round(avg * 100) / 100;
         })
         .finally(() => {
           this.axios
@@ -183,11 +219,10 @@ export default {
     }
   },
   mounted() {
-    this.getReading("setup");
+    this.getReading(this.$options.propsData.time);
   },
   components: {
-    lineChart,
-    gmap
+    lineChart
   }
 };
 </script>

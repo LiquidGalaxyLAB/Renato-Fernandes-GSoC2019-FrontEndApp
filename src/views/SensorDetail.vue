@@ -57,7 +57,12 @@
 
     <v-layout row wrap>
       <v-flex xs12>
-        <gmap :lat="parseFloat(sensor.y)" :lng="parseFloat(sensor.x)" :editable="false" />
+        <gmap
+          :lat="parseFloat(sensor.y)"
+          :lng="parseFloat(sensor.x)"
+          :editable="false"
+          :img="sensor.imgid"
+        />
       </v-flex>
     </v-layout>
   </v-container>
@@ -204,7 +209,13 @@ export default {
                   username: process.env.VUE_APP_user,
                   password: process.env.VUE_APP_key
                 })
-                .then(() => {
+                .then(() => {})
+                .catch(err => {
+                  console.log("here");
+
+                  console.log(err);
+                })
+                .finally(() => {
                   console.log("ue");
                   console.log(window.location.pathname);
                   console.log(
@@ -212,7 +223,8 @@ export default {
                       process.env.VUE_APP_localip +
                         "/front/" +
                         this.sensor.name +
-                        "lgDetail"
+                        "/lgDetail/" +
+                        dateSpan
                     )
                   );
                   var env = process.env;
@@ -222,7 +234,8 @@ export default {
                         env.VUE_APP_localip +
                           "/front/" +
                           this.sensor.name +
-                          "/lgDetail"
+                          "/lgDetail/" +
+                          dateSpan
                       ),
                       lgurl: env.VUE_APP_slaveIp,
                       lguser: env.VUE_APP_user,
@@ -230,18 +243,21 @@ export default {
                     })
                     .then(() => {
                       console.log("finally");
+                    })
+                    .catch(err => {
+                      console.log("ta");
                     });
-                })
-                .catch(err => {
-                  console.log("here");
-
-                  console.log(err);
                 });
+              this.axios.get(
+                process.env.VUE_APP_ericbe +
+                  "/kml/manage/balloon/" +
+                  sensor.sensorid +
+                  "/1"
+              );
             });
         });
     },
     closeSite() {
-      window.alert("que");
       this.axios
         .post(process.env.VUE_APP_backEnd + "/closesite", {
           lgurl: process.env.VUE_APP_slaveIp,
@@ -251,6 +267,12 @@ export default {
         .then(() => {
           console.log("finally");
         });
+      this.axios.get(
+        process.env.VUE_APP_ericbe +
+          "/kml/manage/balloon/" +
+          sensor.sensorid +
+          "/0"
+      );
     }
   },
   mounted() {

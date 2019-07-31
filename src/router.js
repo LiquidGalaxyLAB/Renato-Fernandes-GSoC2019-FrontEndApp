@@ -51,10 +51,15 @@ export default new Router({
       component: () => import('./views/SensorEdit.vue'),
       props: true
     }, {
-      path: '/front/:name/lgDetail',
+      path: '/front/:name/lgDetail/:time',
       name: 'SensorDetail',
       component: () => import('./views/lgDetail.vue'),
       props: true
+    },
+    {
+      path: '/front/lgSetup',
+      name: 'lgSetup',
+      component: () => import('./views/auth/lgsetup.vue'),
     }
   ]
 })

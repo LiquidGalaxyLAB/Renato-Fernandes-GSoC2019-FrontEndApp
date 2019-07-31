@@ -2,7 +2,7 @@
   <v-container grid-list-xs>
     <v-layout row wrap>
       <v-flex offset-xs1 xs6>
-        <h1 class="display-2 font-weight-thin">Welcome {{this.$store.state.user}}</h1>
+        <h1 class="display-2 font-weight-thin">Welcome {{this.$store.state.a.user}}</h1>
         <br />
         <h5 class="body-2">It's {{this.date}} now</h5>
       </v-flex>
@@ -10,9 +10,14 @@
     <br />
     <br />
     <br />
-    <editlist />
-    <v-layout align-center justify-end row fill-height>
+
+    <v-layout align-center row wrap fill-height>
       <v-flex xs12>
+        <editlist />
+      </v-flex>
+    </v-layout>
+    <v-layout row wrap justify-end>
+      <v-flex xs1>
         <v-btn outline large fab color="indigo" to="/front/sensorregister">
           <v-icon>playlist_add</v-icon>
         </v-btn>

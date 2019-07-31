@@ -6,6 +6,9 @@ export default {
   mixins: [reactiveProp],
   props: ["options"],
   mounted() {
+    console.log(this.chartData.datasets[0].data);
+    var min=Math.round(Math.min(...this.chartData.datasets[0].data)-10)
+    var max=Math.round(Math.max(...this.chartData.datasets[0].data)+10)
     var op = {
       responsive: true,
       title: {
@@ -36,6 +39,10 @@ export default {
             scaleLabel: {
               display: true,
               labelString: "Value"
+            },
+            ticks:{
+              min:min,
+              max:max
             }
           }
         ]

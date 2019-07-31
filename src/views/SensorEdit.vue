@@ -1,9 +1,9 @@
 <template>
   <v-container grid-list-xs>
+    <br />
+    <br />
     <v-layout row wrap>
       <v-flex xs5>
-        <br />
-        <br />
         <v-text-field v-model="name" label="Name" placeholder="Sensor Name" outline></v-text-field>
         <v-textarea
           outline
@@ -12,14 +12,27 @@
           placeholder="Description about the sensor"
           v-model="desc"
         ></v-textarea>
-        <v-overflow-btn v-model="unit" :items="units" label="Unit" target="#dropdown-example"></v-overflow-btn>
+        <v-text-field v-model="unit"  label="Unit" outline></v-text-field>
         <v-btn flat color="success" @click="edit">Edit</v-btn>
       </v-flex>
-      <v-flex offset-xs1 xs6>
-        <GridList />
+      <v-flex xs6>
+        <v-layout row wrap align-center justify-center>
+          <v-flex xs12>
+            <v-text-field v-model="imgid" label="Icon" placeholder="Icon url" outline></v-text-field>
+          </v-flex>
+          <v-flex xs3 >
+            <v-img v-if="isFetching" :src="imgid"></v-img>
+          </v-flex>
+        </v-layout>
       </v-flex>
       <v-flex xs12>
-        <gmap v-if="isFetching" :lng="parseFloat(lataux)" :lat="parseFloat(lngaux)" :editable="true" :setMark="true" />
+        <gmap
+          v-if="isFetching"
+          :lng="parseFloat(lngaux)"
+          :lat="parseFloat(lataux)"
+          :editable="true"
+          :setMark="true"
+        />
       </v-flex>
     </v-layout>
   </v-container>
@@ -42,12 +55,14 @@ export default {
       lataux: null,
       lngaux: null,
       oldname: null,
-      isFetching: false
+      isFetching: false,
+      imgid: null
     };
   },
   methods: {
     edit: function() {
-      var store = this.$store.state;
+      var store = this.$store.state.a;
+      console.log(store);
       var vue = this;
       var data = {
         oldname: this.oldname,
@@ -57,57 +72,53 @@ export default {
         name: vue.name,
         desc: vue.desc,
         unit: vue.unit,
-        img: store.selectedimg
+        img: vue.imgid
       };
+      console.log(data);
 
       this.axios
-        .post(process.env.VUE_APP_backEnd+"/data/editsensor", data, {
+        .post(process.env.VUE_APP_backEnd + "/data/editsensor", data, {
           withCredentials: true
         })
         .then(result => {
-
-          window.location.href='/front/sensorlist'
+          window.location.href = "/front/sensorlist";
         })
-        .catch(err => {
-        });
+        .catch(err => {});
     }
   },
   created() {
     var vm = this;
     this.axios
-      .get(process.env.VUE_APP_backEnd+"/auth/check", { withCredentials: true })
+      .get(process.env.VUE_APP_backEnd + "/auth/check", {
+        withCredentials: true
+      })
       .then(result => {
         this.axios
           .get(
-            process.env.VUE_APP_backEnd+"/getSensorInfo?name=" +
+            process.env.VUE_APP_backEnd +
+              "/getSensorInfo?name=" +
               vm.$options.propsData.nameOld
           )
           .then(result => {
             var data = result.data.result;
+            console.log(data);
+
             let vm = this;
             this.unit = data.unit;
             this.name = data.name;
             this.oldname = data.name;
             this.desc = data.description;
-            this.img = data.imgId;
-            this.lataux = data.x;
-            this.lngaux = data.y;
+            this.imgid = data.imgid;
+            this.lataux = data.y;
+            this.lngaux = data.x;
             GoogleMapsLoader.load(function(google) {
-              vm.$store.state.latlng = new google.maps.LatLng(
-                data.x,
-                data.y
-              );
+              vm.$store.state.a.latlng = new google.maps.LatLng(data.y, data.x);
             });
-            setInterval(() => {
-            }, 1000);
-
             this.isFetching = true;
           })
-          .catch(err => {
-          });
+          .catch(err => {});
       })
       .catch(err => {
-
         window.location.href = "/front/signin";
       });
   },

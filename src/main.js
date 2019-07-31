@@ -7,6 +7,7 @@ import router from './router'
 import store from './store'
 import * as VueGoogleMaps from 'vue2-google-maps'
 import Vuetify from 'vuetify'
+import kmlstore from './kmlstore'
 Vue.config.productionTip = false
 import VueCookies from 'vue-cookies'
 import VueSelectImage from 'vue-select-image'
@@ -46,5 +47,6 @@ Vue.use(Vuetify, {
 new Vue({
   router,
   store,
+  kmlstore,
   render: h => h(App)
 }).$mount('#app')
