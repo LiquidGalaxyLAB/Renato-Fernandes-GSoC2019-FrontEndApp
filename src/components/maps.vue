@@ -52,7 +52,6 @@ export default {
           marker = new google.maps.Marker({
             position: e.latLng,
             map: map,
-            icon:vm.$options.propsData
           });
           vm.latLng = e.latLng;
           vm.$store.dispatch("setCoord", e.latLng);
@@ -64,7 +63,6 @@ export default {
               lng: vm.$options.propsData.lng
             },
             map: map,
-            icon: vm.$options.propsData.img
           });
         }
       } else {
@@ -74,7 +72,7 @@ export default {
             lng: vm.$options.propsData.lng,
           },
           map: map,
-          icon: vm.$options.propsData.img
+
         });
       }
     });

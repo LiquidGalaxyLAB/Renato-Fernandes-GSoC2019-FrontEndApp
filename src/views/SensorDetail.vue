@@ -23,6 +23,12 @@
         <v-btn flat v-on:click="closeSite()">
           <span>Close site</span>
         </v-btn>
+        <v-btn flat v-on:click="openballon()">
+          <span>Open ballon</span>
+        </v-btn>
+        <v-btn flat v-on:click="closeBallon()">
+          <span>Close Ballon</span>
+        </v-btn>
       </v-flex>
 
       <v-flex xs6>
@@ -227,33 +233,28 @@ export default {
                         dateSpan
                     )
                   );
-                  var env = process.env;
-                  this.axios
-                    .post(env.VUE_APP_backEnd + "/opensite", {
-                      serverurl: encodeURI(
-                        env.VUE_APP_localip +
-                          "/front/" +
-                          this.sensor.name +
-                          "/lgDetail/" +
-                          dateSpan
-                      ),
-                      lgurl: env.VUE_APP_slaveIp,
-                      lguser: env.VUE_APP_user,
-                      lgkey: env.VUE_APP_key
-                    })
-                    .then(() => {
-                      console.log("finally");
-                    })
-                    .catch(err => {
-                      console.log("ta");
-                    });
                 });
-              this.axios.get(
-                process.env.VUE_APP_ericbe +
-                  "/kml/manage/balloon/" +
-                  sensor.sensorid +
-                  "/1"
-              );
+
+              var env = process.env;
+              this.axios
+                .post(env.VUE_APP_backEnd + "/opensite", {
+                  serverurl: encodeURI(
+                    env.VUE_APP_localip +
+                      "/front/" +
+                      this.sensor.name +
+                      "/lgDetail/" +
+                      dateSpan
+                  ),
+                  lgurl: env.VUE_APP_slaveIp,
+                  lguser: env.VUE_APP_user,
+                  lgkey: env.VUE_APP_key
+                })
+                .then(() => {
+                  console.log("finally");
+                })
+                .catch(err => {
+                  console.log("ta");
+                });
             });
         });
     },
@@ -267,11 +268,21 @@ export default {
         .then(() => {
           console.log("finally");
         });
+    },
+    closeBallon() {
       this.axios.get(
         process.env.VUE_APP_ericbe +
           "/kml/manage/balloon/" +
-          sensor.sensorid +
+          this.sensor.sensorid +
           "/0"
+      );
+    },
+    openballon() {
+      this.axios.get(
+        process.env.VUE_APP_ericbe +
+          "/kml/manage/balloon/" +
+          this.sensor.sensorid +
+          "/1"
       );
     }
   },

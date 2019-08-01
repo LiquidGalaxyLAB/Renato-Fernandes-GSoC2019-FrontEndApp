@@ -78,13 +78,25 @@ export default {
           console.log(result);
           let data = result.data.result;
           vm.axios
-            .post(process.env.VUE_APP_ericbe + "/kml/manage/new?name=renato", formdata)
+            .post(
+              process.env.VUE_APP_ericbe + "/kml/manage/new?name=renato",
+              formdata
+            )
             .then(re => {
               console.log(re);
 
               data.forEach(element => {
                 console.log(element);
-                
+                var b = new Date();
+                var date =
+                  b.getHours() + ":" + b.getMinutes() + ":" + b.getSeconds();
+                var desc =
+                  "<h1>" +
+                  element.username +
+                  "</h1>\n<h3>"+date+"</h3>\n<h1>20 C</h1>"
+                  "\n<p>" +
+                  element.description +
+                  "</p>\n";
                 formdata = new FormData();
                 formdata.append("id", element.sensorid);
                 formdata.append("name", element.name);
@@ -92,9 +104,9 @@ export default {
                 formdata.append("latitude", element.y);
                 formdata.append("range", 0);
                 formdata.append("altMode", "relativeToGround");
-                formdata.append("description", element.description);
+                formdata.append("description", desc);
                 formdata.append("icon", element.imgid);
-                formdata.append('scale',1)
+                formdata.append("scale", 3);
                 console.log(formdata);
 
                 vm.axios.post(
