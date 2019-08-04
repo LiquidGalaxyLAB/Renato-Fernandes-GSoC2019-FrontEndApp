@@ -8,10 +8,10 @@
         </h1>
         <h3>Registered on: {{sensor.register}}</h3>
         <h3>Description: {{sensor.description}}</h3>
+        <h3>Unit description: {{sensor.unitdesd}}</h3>
         <v-divider></v-divider>
         <br />
-        <br />
-        <br />
+
         <v-flex xs12 v-if="hasRead">
           <h3>Min reading:{{min}}</h3>
           <h3>Max reading:{{max}}</h3>
@@ -57,20 +57,7 @@
         </v-layout>
       </v-flex>
     </v-layout>
-    <br />
-    <br />
-    <br />
 
-    <v-layout row wrap>
-      <v-flex xs12>
-        <gmap
-          :lat="parseFloat(sensor.y)"
-          :lng="parseFloat(sensor.x)"
-          :editable="false"
-          :img="sensor.imgid"
-        />
-      </v-flex>
-    </v-layout>
   </v-container>
 </template>
 

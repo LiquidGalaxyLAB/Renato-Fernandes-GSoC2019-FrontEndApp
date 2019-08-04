@@ -13,6 +13,7 @@
           v-model="desc"
         ></v-textarea>
         <v-text-field v-model="unit"  label="Unit" outline></v-text-field>
+        <v-text-field v-model="unitdesc"  label="Unit description" outline></v-text-field>
         <v-btn flat color="success" @click="edit">Edit</v-btn>
       </v-flex>
       <v-flex xs6>
@@ -56,7 +57,8 @@ export default {
       lngaux: null,
       oldname: null,
       isFetching: false,
-      imgid: null
+      imgid: null,
+      unitdesc:null
     };
   },
   methods: {
@@ -72,7 +74,8 @@ export default {
         name: vue.name,
         desc: vue.desc,
         unit: vue.unit,
-        img: vue.imgid
+        img: vue.imgid,
+        unitdesc:vue.unitdesc
       };
       console.log(data);
 
@@ -81,7 +84,7 @@ export default {
           withCredentials: true
         })
         .then(result => {
-          window.location.href = "/front/sensorlist";
+          window.location.href = "/front/dashboard";
         })
         .catch(err => {});
     }
@@ -111,6 +114,7 @@ export default {
             this.imgid = data.imgid;
             this.lataux = data.y;
             this.lngaux = data.x;
+            this.unitdesc=data.unitdesd
             GoogleMapsLoader.load(function(google) {
               vm.$store.state.a.latlng = new google.maps.LatLng(data.y, data.x);
             });

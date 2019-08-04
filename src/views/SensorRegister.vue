@@ -5,6 +5,7 @@
     <v-layout row wrap>
       <v-flex xs6>
         <v-text-field v-model="name" label="Name" placeholder="Sensor Name" outline></v-text-field>
+
         <v-textarea
           outline
           name="input-7-4"
@@ -18,6 +19,8 @@
         <v-layout row wrap align-center justify-center>
           <v-flex xs12>
             <v-text-field v-model="imgid" label="Icon" placeholder="Icon url" outline></v-text-field>
+            <v-text-field v-model="unit" label="Unit" outline></v-text-field>
+            <v-text-field v-model="unitdesc" label="Unit description" outline></v-text-field>
           </v-flex>
           <v-flex xs3>
             <v-img v-if="imgid!=null" :src="imgid"></v-img>
@@ -42,7 +45,8 @@ export default {
       name: null,
       unit: null,
       desc: null,
-      imgid: null
+      imgid: "",
+      unitdesc: null
     };
   },
   methods: {
@@ -56,14 +60,15 @@ export default {
         name: vue.name,
         desc: vue.desc,
         unit: vue.unit,
-        img: vue.imgid
+        img: vue.imgid,
+        unitdesc:vue.unitdesc
       };
       this.axios
         .post(process.env.VUE_APP_backEnd + "/data/registersensor", data, {
           withCredentials: true
         })
         .then(result => {
-          window.location.href = "/front/sensorlist";
+          window.location.href = "/front/dashboard";
         });
     }
   },

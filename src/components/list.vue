@@ -1,11 +1,14 @@
 <template>
-  <v-alert :value="true" type="info">
+  <v-alert :value="true"  color="white" >
     <v-layout align-center row wrap fill-height>
       <v-flex xs1>
-        <h3 class="text-xs-center">{{title}}</h3>
+         <v-img :src="imgId" />
+      </v-flex>
+      <v-flex xs1>
+        <h3 class="text-xs-center black--text">{{title}}</h3>
       </v-flex>
       <v-spacer></v-spacer>
-      <v-btn color="success"  round @click="detail">See details</v-btn>
+      <v-btn color="green"  round @click="detail">See details</v-btn>
     </v-layout>
   </v-alert>
 </template>
@@ -26,7 +29,6 @@ export default {
       let test=window
       this.axios.get(process.env.VUE_APP_backEnd+'/beurl').then(re=>{
         console.log(re.data.result);
-        //todo get url to eric to be open in a liquid galaxy
         test.location.href='/front/'+this.$options.propsData.title+'/sensorDetail'
       })
       

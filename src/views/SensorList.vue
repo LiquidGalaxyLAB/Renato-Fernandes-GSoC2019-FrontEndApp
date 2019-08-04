@@ -11,8 +11,8 @@
         <h1>{{sensor.name}}</h1>
         <v-divider></v-divider>
         <br />
-        <v-flex xs12 v-for="(name, index) in sensor.sensors" :key="index">
-          <list :title="name" />
+        <v-flex xs12 v-for="(det, index) in sensor.sensors" :key="index">
+          <list :title="det.name" :imgId="det.img" />
         </v-flex>
       </v-flex>
     </v-layout>
