@@ -21,6 +21,7 @@
             <v-text-field v-model="imgid" label="Icon" placeholder="Icon url" outline></v-text-field>
             <v-text-field v-model="unit" label="Unit" outline></v-text-field>
             <v-text-field v-model="unitdesc" label="Unit description" outline></v-text-field>
+           <v-checkbox v-model="ismock" label="Generate mock data?"></v-checkbox>
           </v-flex>
           <v-flex xs3>
             <v-img v-if="imgid!=null" :src="imgid"></v-img>
@@ -46,7 +47,8 @@ export default {
       unit: null,
       desc: null,
       imgid: "",
-      unitdesc: null
+      unitdesc: null,
+      ismock:false
     };
   },
   methods: {
@@ -61,7 +63,8 @@ export default {
         desc: vue.desc,
         unit: vue.unit,
         img: vue.imgid,
-        unitdesc:vue.unitdesc
+        unitdesc:vue.unitdesc,
+        ismock:vue.ismock
       };
       this.axios
         .post(process.env.VUE_APP_backEnd + "/data/registersensor", data, {

@@ -43,7 +43,6 @@ export default {
       vm.axios
         .get(process.env.VUE_APP_backEnd + "/getfullsensors")
         .then(response => {
-          console.log(response.data.result);
           response = response.data.result;
           response.forEach(element => {
             vm.markers.push(
@@ -82,23 +81,17 @@ export default {
                 content: "Renato"
               })
             );
-            console.log(vm.markers);
-            console.log(vm.info);
-            console.log(i);
             i++;
             contentString += "aaaaaaaaaaaaaaaaa";
           });
         })
         .catch(err => {
-          console.log(err);
         });
     });
-    console.log(this.markers);
     
     let i=0
     this.markers.forEach(element => {
       this.markers[i].addListener("click", function() {
-        console.log(this.info[i]);
         this.info[i].open(map, markers[i]);
       });
       i++

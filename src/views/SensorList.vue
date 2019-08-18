@@ -33,7 +33,6 @@ export default {
     this.axios
       .get(process.env.VUE_APP_backEnd + "/getAllSensors")
       .then(response => {
-        console.log(response.data.result);
         var sensorFormat = {};
 
         this.sensorList = response.data.result;

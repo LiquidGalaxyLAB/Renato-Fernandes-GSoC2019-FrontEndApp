@@ -13,11 +13,13 @@ export default {
     fontSize:Number
     },
   mounted() {
-    console.log(this.chartData.datasets[0].data);
-    var min=Math.round(Math.min(...this.chartData.datasets[0].data)-10)
-    var max=Math.round(Math.max(...this.chartData.datasets[0].data)+10)
+    console.log('chart data',this.chartData.datasets[2].data);
+    
+    var min=Math.round(Math.min(...this.chartData.datasets[2].data))
+    var max=Math.round(Math.max(...this.chartData.datasets[1].data))
+    
+    
     var vm=this
-    console.log(vm.$options.propsData);
     
     var op = {
       responsive: true,

@@ -33,7 +33,6 @@ export default {
     var vm = this;
     var markers = [];
     var marker;
-    console.log(vm.$options.propsData);
 
     GoogleMapsLoader.load(function(google) {
       let map = new google.maps.Map(document.getElementById("map"), {

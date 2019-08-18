@@ -14,7 +14,8 @@
         ></v-textarea>
         <v-text-field v-model="unit"  label="Unit" outline></v-text-field>
         <v-text-field v-model="unitdesc"  label="Unit description" outline></v-text-field>
-        <v-btn flat color="success" @click="edit">Edit</v-btn>
+           <v-checkbox v-model="ismock" label="Generate mock data?"></v-checkbox>
+        <v-btn flat color="success" @click="edit">Register</v-btn>
       </v-flex>
       <v-flex xs6>
         <v-layout row wrap align-center justify-center>
@@ -58,13 +59,13 @@ export default {
       oldname: null,
       isFetching: false,
       imgid: null,
-      unitdesc:null
+      unitdesc:null,
+      ismock:false
     };
   },
   methods: {
     edit: function() {
       var store = this.$store.state.a;
-      console.log(store);
       var vue = this;
       var data = {
         oldname: this.oldname,
@@ -75,10 +76,16 @@ export default {
         desc: vue.desc,
         unit: vue.unit,
         img: vue.imgid,
-        unitdesc:vue.unitdesc
+        unitdesc:vue.unitdesc,
       };
-      console.log(data);
-
+      if(vue.ismock){
+        data.ismock='true'
+      }
+      else{
+        data.ismock='false'
+      }
+      console.log("data for edit",data);
+      
       this.axios
         .post(process.env.VUE_APP_backEnd + "/data/editsensor", data, {
           withCredentials: true
@@ -104,7 +111,6 @@ export default {
           )
           .then(result => {
             var data = result.data.result;
-            console.log(data);
 
             let vm = this;
             this.unit = data.unit;
@@ -115,6 +121,7 @@ export default {
             this.lataux = data.y;
             this.lngaux = data.x;
             this.unitdesc=data.unitdesd
+            this.ismock=data.mock
             GoogleMapsLoader.load(function(google) {
               vm.$store.state.a.latlng = new google.maps.LatLng(data.y, data.x);
             });

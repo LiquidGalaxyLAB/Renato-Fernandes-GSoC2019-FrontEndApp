@@ -28,7 +28,6 @@ export default {
     detail(){
       let test=window
       this.axios.get(process.env.VUE_APP_backEnd+'/beurl').then(re=>{
-        console.log(re.data.result);
         test.location.href='/front/'+this.$options.propsData.title+'/sensorDetail'
       })
       
