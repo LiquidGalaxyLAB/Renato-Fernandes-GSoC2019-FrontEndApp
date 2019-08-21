@@ -12,6 +12,9 @@
       <v-btn flat color="primary" @click="generatekml()">
         <span class="mr-2 blue--text">Generate kml</span>
       </v-btn>
+      <v-btn flat color="primary" @click="generatekml()">
+        <span class="mr-2 blue--text">Clean kml</span>
+      </v-btn>
       <v-btn flat href="/front/map" color="primary">
         <span class="mr-2 blue--text">Sensor Map</span>
       </v-btn>
@@ -51,6 +54,9 @@ export default {
     };
   },
   methods: {
+    cleankml(){
+      this.axios.get(cess.env.VUE_APP_ericbe+"/kml/manage/clean")
+    },
     home: function() {
       this.$router.push({ name: "home" });
     },
@@ -69,6 +75,8 @@ export default {
     },
     generatekml() {
       let vm = this;
+      console.log("Generating");
+      
       const groupBy = key => array =>
         array.reduce(
           (objectsByKeyValue, obj) => ({
@@ -112,6 +120,8 @@ export default {
               data.forEach(element => {
                 var b = new Date();
                 let unit = element.unit
+                console.log(element);
+                
                 vm.axios
                   .get(
                     process.env.VUE_APP_backEnd +
@@ -233,7 +243,8 @@ export default {
                     formdata.append("description", desc);
                     formdata.append("icon", element.imgid);
                     formdata.append("scale", 3);
-
+                    console.log(formdata);
+                    
                     vm.axios.post(
                       process.env.VUE_APP_ericbe + "/kml/builder/addplacemark",
                       formdata

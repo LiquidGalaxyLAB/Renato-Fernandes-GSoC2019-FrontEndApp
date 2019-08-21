@@ -130,28 +130,27 @@ export default {
       if (dateSpan != "setup") {
         post += "&datespan=" + dateSpan;
       }
-      post = encodeURI(post);
-      let sen = await this.axios.get(
+      let r = await this.axios.get(
         process.env.VUE_APP_backEnd +
           "/getSensorInfo?name=" +
           this.$options.propsData.name
       );
+      post = encodeURI(post);
+      if (!r.data.result.mock) {
+        result = await this.axios.get(post);
+        console.log("data result", result);
+        readings = result.data.result;
+      } else {
+        readings = await this.generatedatapack(dateSpan);
+        this.$store.dispatch("setMockData", readings);
+        console.log("Store", this.$store);
+      }
       let readings;
-      let result
+      let result;
       var data = [];
       var labels = [];
       var j = 0;
-      if (!sen.data.result.mock) {
-        result = await this.axios.get(post);
-        readings = result.data.result;
-      }
-      else{
-        readings=this.$store.state.a.mockdata
-        console.log("strore",this.$store);
-        
-        console.log(readings);
-        
-      }
+
 
       const groupBy = key => array =>
         array.reduce(
@@ -183,7 +182,7 @@ export default {
           value.forEach(element => {
             values.push(parseFloat(element.value));
           });
-
+        
           var sum = values.reduce(function(a, b) {
             return a + b;
           });
@@ -307,10 +306,15 @@ export default {
       }
       this.data = data;
       this.labels = labels;
-
-      var sum = this.realdata.reduce(function(a, b) {
+      var sum;
+      if(this.realdata.length!=0){
+      sum = this.realdata.reduce(function(a, b) {
         return a + b;
       });
+      }
+      else{
+        sum=0
+      }
       var avg = sum / this.realdata.length;
       this.avg = Math.round(avg * 10) / 10;
       this.min = Math.round(Math.min(...this.realdatamin) * 10) / 10;
@@ -358,7 +362,7 @@ export default {
         ]
       };
       var vm = this;
-      let r = await this.axios.get(
+      r = await this.axios.get(
         process.env.VUE_APP_backEnd + "/getAllSensors"
       );
       r.data.result.forEach(owner => {
@@ -367,6 +371,54 @@ export default {
             vm.owner = owner.name;
           }
         });
+      });
+    },
+    generatedatapack(span) {
+      return new Promise(async (resolve, reject) => {
+        let data = [];
+        let date = new Date();
+        let datedefault = new Date();
+
+        for (let i = 0; i < 12; i++) {
+          if (i != 0) date.setMonth(date.getMonth() - 1);
+
+          if (span == "1d" || span == "1m" || span == "1w") {
+            i = 12;
+          }
+          if (date.getFullYear() == datedefault.getFullYear()) {
+            var daysIM = new Date(
+              date.getFullYear(),
+              date.getMonth(),
+              0
+            ).getDate();
+            if (span == "1w") daysIM = 7;
+            for (let k = 0; k < daysIM; k++) {
+              if (k != 0) {
+                date.setDate(date.getDate() - 1);
+                date.setHours(0);
+              }
+
+              console.log("Date", date.getDate());
+
+              let hours;
+              hours = datedefault.getHours() + 1;
+
+              if (span == "1d") {
+                k = 100;
+              }
+              for (let j = 0; j < hours; j++) {
+                date.setHours(j + 3);
+                await console.log("date", date.toISOString());
+                data.push({
+                  date: date.toISOString(),
+                  value: Math.random() * (30 - 10) + 10
+                });
+              }
+            }
+          }
+        }
+        console.log("generated", data);
+        resolve(data);
       });
     }
   },

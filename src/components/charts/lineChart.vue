@@ -15,8 +15,8 @@ export default {
   mounted() {
     console.log('chart data',this.chartData.datasets[2].data);
     
-    var min=Math.round(Math.min(...this.chartData.datasets[2].data))
-    var max=Math.round(Math.max(...this.chartData.datasets[1].data))
+    var min=Math.floor(Math.min(...this.chartData.datasets[2].data))
+    var max=Math.ceil(Math.max(...this.chartData.datasets[1].data))
     
     
     var vm=this
