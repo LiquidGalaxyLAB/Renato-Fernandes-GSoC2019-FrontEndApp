@@ -1,29 +1,5 @@
 # GSoC-FrontEnd
 
-## Project setup
-```
-npm install
-```
+This is the front end for the project developed for the gsoc 2019 found [here](https://github.com/LiquidGalaxyLAB/Renato-Fernandes-GSoC2019)
 
-### Compiles and hot-reloads for development
-```
-npm run serve
-```
-
-### Compiles and minifies for production
-```
-npm run build
-```
-
-### Run your tests
-```
-npm run test
-```
-
-### Lints and fixes files
-```
-npm run lint
-```
-
-### Customize configuration
-See [Configuration Reference](https://cli.vuejs.org/config/).
+Follow the readme there to setup the project.

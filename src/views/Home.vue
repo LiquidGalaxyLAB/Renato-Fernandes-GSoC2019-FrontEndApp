@@ -11,14 +11,14 @@
         <br />
         <v-flex xs12>
           <v-layout row wrap align-center justify-space-around fill-height>
-            <v-flex xs4>
+            <v-flex xs8>
               <v-img :src="require('../assets/liquidsensors.png')" />
             </v-flex>
           </v-layout>
         </v-flex>
         <v-flex xs12>
           <v-layout row wrap align-center justify-space-around fill-height>
-            <v-flex xs4>
+            <v-flex xs3>
               <v-img :src="require('../assets/LOGO LIQUID GALAXY.jpg')" />
             </v-flex>
           </v-layout>
@@ -48,10 +48,10 @@
       <v-flex xs12>
         <v-layout align-center justify-space-around row wrap fill-height>
           <v-flex xs3>
-            <v-img :src="require('../assets/inno4agro-logo.jpg')" />
+            <v-img :src="require('../assets/agro.jpg')" />
           </v-flex>
           <v-flex xs3>
-            <v-img :src="require('../assets/agro.jpg')" />
+            <v-img :src="require('../assets/inno4agro-logo.jpg')" />
           </v-flex>
           <v-flex xs3>
             <v-img :src="require('../assets/LogoFACENS-1210x642.png')" />
